@@ -12,7 +12,7 @@ const articles = [
   }
 ];
 
-const baseUrl = process.env.URL || 'https://your-site.netlify.app';
+const baseUrl = process.env.URL || 'https://arabpress.netlify.app';
 
 // Lire l'index.html principal pour obtenir les références correctes des assets
 const mainIndexPath = join('dist', 'index.html');
