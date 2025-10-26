@@ -9,6 +9,8 @@ export default function ArticleDetail() {
   // Construire l'URL absolue pour l'image
   const imageUrl = article?.id === 7 
     ? `${window.location.origin}/img/gabesmanif.webp`
+    : article?.id === 8
+    ? `${window.location.origin}/img/marocmanif.webp`
     : `${window.location.origin}/vite.svg`;
   
   const articleUrl = window.location.href;
@@ -62,6 +64,15 @@ export default function ArticleDetail() {
                 <img 
                   src="/img/gabesmanif.webp" 
                   alt="احتجاجات في مدينة قابس ضد التلوث البيئي"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40"></div>
+              </>
+            ) : article.id === 8 ? (
+              <>
+                <img 
+                  src="/img/marocmanif.webp" 
+                  alt="احتجاجات حركة GenZ 212 في المغرب"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40"></div>

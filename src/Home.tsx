@@ -81,6 +81,15 @@ export default function Home(): JSX.Element {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                 </div>
+              ) : item.id === 8 ? (
+                <div className="relative w-full h-56 overflow-hidden">
+                  <img
+                    src="/img/marocmanif.webp"
+                    alt={item.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
               ) : (
                 <div className="bg-gray-200 border-2 border-dashed rounded-t-xl w-full h-56 group-hover:opacity-90 transition-opacity duration-300"></div>
               )}
