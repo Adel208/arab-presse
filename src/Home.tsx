@@ -31,10 +31,40 @@ export default function Home(): JSX.Element {
         <meta property="og:site_name" content="بوابة الأخبار العربية" />
       </Helmet>
 
+      {/* Hero Section */}
+      {selectedCategory === 'الكل' && (
+        <section className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-950 text-white py-20 px-8 overflow-hidden">
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-300 rounded-full blur-3xl"></div>
+          </div>
+          <div className="max-w-7xl mx-auto relative z-10">
+            <div className="text-center">
+              <h1 className="text-5xl md:text-6xl font-extrabold mb-6 leading-tight">
+                بوابة الأخبار العربية
+              </h1>
+              <p className="text-xl md:text-2xl text-blue-100 mb-8 leading-relaxed max-w-3xl mx-auto">
+                مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية
+              </p>
+              <div className="flex items-center justify-center gap-4 text-lg">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                  <span>تحديثات يومية</span>
+                </div>
+                <span className="text-blue-300">•</span>
+                <span>تغطية شاملة</span>
+                <span className="text-blue-300">•</span>
+                <span>تحليلات معمقة</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       <div className="max-w-7xl mx-auto px-8 py-12">
         <section className="mb-12">
-          <h2 className="text-4xl font-extrabold text-gray-900 mb-4 text-center">
-            {selectedCategory === 'الكل' ? 'جميع الأخبار' : `أخبار ${selectedCategory}`}
+          <h2 className="text-3xl font-extrabold text-gray-900 mb-4 text-center">
+            {selectedCategory === 'الكل' ? 'آخر الأخبار' : `أخبار ${selectedCategory}`}
           </h2>
           <p className="text-center text-gray-600 text-lg">
             {filteredNews.length} {filteredNews.length === 1 ? 'مقال' : 'مقالات'}
