@@ -35,18 +35,25 @@ export default function Home(): JSX.Element {
         {/* Hero Section - Breaking News */}
         {selectedCategory === 'الكل' && (
           <section className="mb-16">
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 md:p-12 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col lg:flex-row items-center gap-10 border border-blue-100">
+            <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-8 md:p-12 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col lg:flex-row items-center gap-10 border border-red-100">
               <div className="flex-1 text-center lg:text-right">
-                <span className="inline-block px-4 py-2 bg-blue-600 text-white text-sm font-bold rounded-full mb-6 tracking-wider">خبر عاجل</span>
-                <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 leading-tight">اكتشاف علمي يغير قواعد الطب الحديث</h2>
+                <span className="inline-block px-4 py-2 bg-red-600 text-white text-sm font-bold rounded-full mb-6 tracking-wider">بيئة</span>
+                <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 leading-tight">قابس تختنق: مدينة الموت البطيء بين وعود السلطة وصمود الأهالي</h2>
                 <p className="text-gray-700 mb-8 leading-relaxed max-w-3xl mx-auto lg:mx-0">
-                  أعلن باحثون دوليون عن تطوير تقنية جينية ثورية تعالج الأمراض المزمنة بنسبة نجاح 95%، مما يفتح آفاقًا جديدة في الرعاية الصحية العالمية ويقلل تكاليف العلاج بشكل جذري.
+                  تعيش قابس التونسية أزمة بيئية خانقة دفعت آلاف السكان إلى الشوارع احتجاجًا على التلوث الصناعي، وسط وعود حكومية واتهامات بالإهمال والتواطؤ. أكثر من 14 ألف طن من الفوسفوجبسوم يُلقى يوميًا في البحر.
                 </p>
-                <a href="#" className="inline-flex items-center gap-3 bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                <Link to="/article/7" className="inline-flex items-center gap-3 bg-red-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-red-700 transition-colors duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-1">
                   اقرأ المزيد
-                </a>
+                </Link>
               </div>
-              <div className="lg:w-1/2 w-full h-64 md:h-80 bg-gray-200 border-2 border-dashed rounded-xl shadow-inner"></div>
+              <div className="lg:w-1/2 w-full h-64 md:h-80 rounded-xl shadow-inner overflow-hidden relative">
+                <img 
+                  src="/img/gabesmanif.webp" 
+                  alt="احتجاجات في مدينة قابس ضد التلوث البيئي"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+              </div>
             </div>
           </section>
         )}
