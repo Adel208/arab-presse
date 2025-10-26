@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { newsData } from './data';
+import { newsData, categories } from './data';
 
 export default function Home(): JSX.Element {
   const [searchParams] = useSearchParams();
@@ -58,18 +58,18 @@ export default function Home(): JSX.Element {
           </section>
         )}
 
-        <section className="mb-12">
-          <div className="flex items-center justify-between mb-10 border-b border-gray-200 pb-6">
-            <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 flex items-center gap-3">
-              <span className="text-blue-600">{selectedCategory === 'الكل' ? 'أحدث الأخبار' : `أخبار ${selectedCategory}`}</span>
-            </h2>
-            <p className="text-sm text-gray-600 bg-gray-100 px-4 py-2 rounded-full font-medium">
-              {filteredNews.length} مقال متاح
-            </p>
-          </div>
-        </section>
+        <section className="flex flex-col lg:flex-row-reverse gap-10 lg:gap-12">
+          <div className="flex-1">
+            <div className="flex items-center justify-between mb-10 border-b border-gray-200 pb-6">
+              <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 flex items-center gap-3">
+                <span className="text-blue-600">{selectedCategory === 'الكل' ? 'أحدث الأخبار' : `أخبار ${selectedCategory}`}</span>
+              </h2>
+              <p className="text-sm text-gray-600 bg-gray-100 px-4 py-2 rounded-full font-medium">
+                {filteredNews.length} مقال متاح
+              </p>
+            </div>
 
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredNews.map((item) => (
             <article key={item.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-2xl hover:-translate-y-3 transition-all duration-300 group border border-gray-100">
               {item.id === 7 ? (
@@ -109,14 +109,44 @@ export default function Home(): JSX.Element {
           ))}
         </section>
 
-        {filteredNews.length === 0 && (
-          <div className="text-center py-20">
-            <h3 className="text-2xl font-bold text-gray-600 mb-4">لا توجد أخبار في هذه الفئة</h3>
-            <Link to="/" className="text-blue-600 hover:text-blue-700 font-semibold">
-              العودة إلى جميع الأخبار
-            </Link>
-          </div>
-        )}
+          {filteredNews.length === 0 && (
+            <div className="text-center py-20 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
+              <h3 className="text-2xl font-bold text-gray-600 mb-4">لا توجد أخبار في هذه الفئة</h3>
+              <Link to="/" className="text-blue-600 hover:text-blue-700 font-semibold">
+                العودة إلى جميع الأخبار
+              </Link>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Sidebar - Categories */}
+      <aside className="lg:w-64 w-full bg-white rounded-xl shadow-lg p-6 sticky top-32 h-fit border border-gray-100">
+        <h3 className="text-2xl font-extrabold text-gray-900 mb-6 flex items-center gap-3 border-b border-gray-200 pb-4">
+          <span className="text-blue-600">التصنيفات</span>
+        </h3>
+        <ul className="space-y-1">
+          {categories.map((category) => (
+            <li key={category}>
+              <Link
+                to={category === 'الكل' ? '/' : `/?category=${encodeURIComponent(category)}`}
+                onClick={() => setSelectedCategory(category)}
+                className={`w-full block text-right py-4 px-6 rounded-lg font-semibold transition-all duration-200 flex items-center justify-between group ${
+                  selectedCategory === category 
+                    ? 'bg-blue-600 text-white shadow-md' 
+                    : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:shadow-sm'
+                }`}
+              >
+                <span>{category}</span>
+                <span className={`transform transition-transform duration-200 ${
+                  selectedCategory === category ? 'translate-x-2' : 'group-hover:translate-x-2'
+                }`}>→</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    </section>
       </div>
     </div>
   );
