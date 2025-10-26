@@ -52,16 +52,8 @@ export default function ArticleDetail() {
         <meta name="twitter:description" content={article.metaDescription || article.summary} />
         <meta name="twitter:image" content={imageUrl} />
       </Helmet>
-      <header className="bg-white shadow-md py-6 px-8 border-b border-gray-200">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold">
-            <span>← العودة</span>
-          </Link>
-          <h1 className="text-2xl font-bold text-blue-700">بوابة الأخبار العربية</h1>
-        </div>
-      </header>
 
-      <main className="max-w-4xl mx-auto px-6 py-12">
+      <main className="max-w-4xl mx-auto px-6 py-8">
         <article className="bg-white rounded-xl shadow-lg overflow-hidden">
           {/* Hero Section */}
           <div className="relative w-full h-96 md:h-[500px] overflow-hidden">
