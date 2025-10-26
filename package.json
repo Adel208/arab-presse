@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && node generate-articles.js",
-    "preview": "vite preview"
+    "build": "tsc && vite build && node generate-articles.js && node generate-sitemap.js",
+    "preview": "vite preview",
+    "generate-sitemap": "node generate-sitemap.js"
   },
   "dependencies": {
     "react": "^18.2.0",

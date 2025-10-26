@@ -1,0 +1,27 @@
+# robots.txt pour بوابة الأخبار العربية
+
+# Autoriser tous les robots par défaut
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://yourdomain.com/sitemap.xml
+
+# Bloquer l'accès aux dossiers de build et assets (optionnel)
+Disallow: /src/
+Disallow: /node_modules/
+
+# Optimisation du crawl budget
+Crawl-delay: 1
+
+# Permettre l'indexation des images
+User-agent: Googlebot-Image
+Allow: /img/
+
+# Autoriser les bots de réseaux sociaux
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+

@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import { newsData } from './data';
 
 export default function ArticleDetail() {
-  const { id } = useParams<{ id: string }>();
-  const article = newsData.find(item => item.id === parseInt(id || '0', 10));
+  const { slug } = useParams<{ slug: string }>();
+  const article = newsData.find(item => item.slug === slug);
   
   // Construire l'URL absolue pour l'image
   const imageUrl = article?.id === 7 
@@ -14,6 +14,7 @@ export default function ArticleDetail() {
     : `${window.location.origin}/vite.svg`;
   
   const articleUrl = window.location.href;
+  const canonicalUrl = article ? `${window.location.origin}/article/${article.slug}` : articleUrl;
 
   if (!article) {
     return (
@@ -28,16 +29,48 @@ export default function ArticleDetail() {
 
   const contentSections = article.content ? article.content.split('##').filter(section => section.trim()) : [];
 
+  // Données structurées JSON-LD pour SEO
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": article.title,
+    "description": article.metaDescription || article.summary,
+    "image": [imageUrl],
+    "datePublished": article.date,
+    "dateModified": article.date,
+    "author": {
+      "@type": "Person",
+      "name": article.author || "هيئة التحرير"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "بوابة الأخبار العربية",
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${window.location.origin}/vite.svg`
+      }
+    },
+    "articleSection": article.category,
+    "keywords": article.keywords || '',
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonicalUrl
+    },
+    "inLanguage": "ar"
+  };
+
   return (
     <div dir="rtl" lang="ar" className="min-h-screen bg-gray-50">
       <Helmet>
         <title>{article.title} - بوابة الأخبار العربية</title>
         <meta name="description" content={article.metaDescription || article.summary} />
         <meta name="keywords" content={article.keywords || ''} />
+        <meta name="author" content={article.author || "هيئة التحرير"} />
+        <link rel="canonical" href={canonicalUrl} />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={articleUrl} />
+        <meta property="og:url" content={canonicalUrl} />
         <meta property="og:title" content={article.title} />
         <meta property="og:description" content={article.metaDescription || article.summary} />
         <meta property="og:image" content={imageUrl} />
@@ -45,14 +78,25 @@ export default function ArticleDetail() {
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="بوابة الأخبار العربية" />
         <meta property="article:published_time" content={article.date} />
+        <meta property="article:modified_time" content={article.date} />
+        <meta property="article:author" content={article.author || "هيئة التحرير"} />
         <meta property="article:section" content={article.category} />
+        {article.keywords && article.keywords.split('،').map((tag, index) => (
+          <meta key={index} property="article:tag" content={tag.trim()} />
+        ))}
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content={articleUrl} />
+        <meta name="twitter:url" content={canonicalUrl} />
         <meta name="twitter:title" content={article.title} />
         <meta name="twitter:description" content={article.metaDescription || article.summary} />
         <meta name="twitter:image" content={imageUrl} />
+        <meta name="twitter:creator" content={article.author || "هيئة التحرير"} />
+        
+        {/* Données structurées JSON-LD */}
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
       </Helmet>
 
       <main className="max-w-4xl mx-auto px-6 py-8">
@@ -64,6 +108,9 @@ export default function ArticleDetail() {
                 <img 
                   src="/img/gabesmanif.webp" 
                   alt="احتجاجات في مدينة قابس ضد التلوث البيئي"
+                  width="1200"
+                  height="800"
+                  loading="eager"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40"></div>
@@ -73,6 +120,9 @@ export default function ArticleDetail() {
                 <img 
                   src="/img/marocmanif.webp" 
                   alt="احتجاجات حركة GenZ 212 في المغرب"
+                  width="1200"
+                  height="800"
+                  loading="eager"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40"></div>
@@ -88,9 +138,21 @@ export default function ArticleDetail() {
                 <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-4 leading-tight drop-shadow-2xl">
                   {article.title}
                 </h1>
-                <time className="text-gray-200 font-medium text-lg drop-shadow-lg" dateTime={article.date}>
-                  {article.date}
-                </time>
+                <div className="text-gray-200 font-medium text-lg drop-shadow-lg">
+                  <time dateTime={article.date}>
+                    {new Date(article.date).toLocaleDateString('ar-EG', { 
+                      year: 'numeric', 
+                      month: 'long', 
+                      day: 'numeric' 
+                    })}
+                  </time>
+                  {article.author && (
+                    <span className="mx-2">•</span>
+                  )}
+                  {article.author && (
+                    <span>بقلم: {article.author}</span>
+                  )}
+                </div>
               </div>
             </div>
           </div>

@@ -20,15 +20,49 @@ export default function Home(): JSX.Element {
     selectedCategory === 'الكل' || item.category === selectedCategory
   );
 
+  // Données structurées pour la page d'accueil
+  const homeStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "بوابة الأخبار العربية",
+    "url": window.location.origin,
+    "description": "مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية",
+    "inLanguage": "ar",
+    "publisher": {
+      "@type": "Organization",
+      "name": "بوابة الأخبار العربية",
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${window.location.origin}/vite.svg`
+      }
+    }
+  };
+
+  const canonicalUrl = selectedCategory === 'الكل' 
+    ? window.location.origin 
+    : `${window.location.origin}/?category=${encodeURIComponent(selectedCategory)}`;
+
   return (
     <div dir="rtl" lang="ar" className="bg-gray-50 text-gray-900 font-sans">
       <Helmet>
         <title>بوابة الأخبار العربية - مصدرك الموثوق للأخبار العاجلة</title>
         <meta name="description" content="مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية، مع تغطية شاملة للأحداث السياسية والاقتصادية والثقافية والبيئية." />
+        <link rel="canonical" href={canonicalUrl} />
+        
         <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
         <meta property="og:title" content="بوابة الأخبار العربية" />
         <meta property="og:description" content="مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية" />
         <meta property="og:site_name" content="بوابة الأخبار العربية" />
+        <meta property="og:image" content={`${window.location.origin}/img/gabesmanif.webp`} />
+        
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="بوابة الأخبار العربية" />
+        <meta name="twitter:description" content="مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية" />
+        
+        <script type="application/ld+json">
+          {JSON.stringify(homeStructuredData)}
+        </script>
       </Helmet>
 
       <div className="max-w-7xl mx-auto px-8 py-12">
@@ -42,7 +76,7 @@ export default function Home(): JSX.Element {
                 <p className="text-gray-700 mb-8 leading-relaxed max-w-3xl mx-auto lg:mx-0">
                   تعيش قابس التونسية أزمة بيئية خانقة دفعت آلاف السكان إلى الشوارع احتجاجًا على التلوث الصناعي، وسط وعود حكومية واتهامات بالإهمال والتواطؤ. أكثر من 14 ألف طن من الفوسفوجبسوم يُلقى يوميًا في البحر.
                 </p>
-                <Link to="/article/7" className="inline-flex items-center gap-3 bg-red-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-red-700 transition-colors duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                <Link to="/article/gabes-pollution-environnement" className="inline-flex items-center gap-3 bg-red-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-red-700 transition-colors duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-1">
                   اقرأ المزيد
                 </Link>
               </div>
@@ -50,6 +84,9 @@ export default function Home(): JSX.Element {
                 <img 
                   src="/img/gabesmanif.webp" 
                   alt="احتجاجات في مدينة قابس ضد التلوث البيئي"
+                  width="800"
+                  height="600"
+                  loading="eager"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
@@ -77,6 +114,9 @@ export default function Home(): JSX.Element {
                       <img
                         src="/img/gabesmanif.webp"
                         alt={item.title}
+                        width="400"
+                        height="300"
+                        loading="lazy"
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -86,6 +126,9 @@ export default function Home(): JSX.Element {
                       <img
                         src="/img/marocmanif.webp"
                         alt={item.title}
+                        width="400"
+                        height="300"
+                        loading="lazy"
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -100,7 +143,7 @@ export default function Home(): JSX.Element {
                     </div>
                     <h3 className="text-xl font-extrabold text-gray-900 group-hover:text-blue-600 transition-colors duration-200 overflow-hidden text-ellipsis whitespace-nowrap">{item.title}</h3>
                     <p className="text-gray-600 leading-relaxed overflow-hidden" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>{item.summary}</p>
-                    <Link to={`/article/${item.id}`} className="inline-flex items-center gap-2 text-blue-600 font-bold hover:text-blue-700 transition-colors duration-200 group-hover:gap-3">
+                    <Link to={`/article/${item.slug}`} className="inline-flex items-center gap-2 text-blue-600 font-bold hover:text-blue-700 transition-colors duration-200 group-hover:gap-3">
                       اقرأ المزيد
                       <span className="transform transition-transform duration-200 group-hover:translate-x-2">→</span>
                     </Link>
