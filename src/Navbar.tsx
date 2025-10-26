@@ -3,9 +3,10 @@ import { categories } from './data';
 
 export default function Navbar() {
   return (
-    <header className="bg-white shadow-md py-6 px-8 sticky top-0 z-50 border-b border-gray-200">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-6">
+    <header className="bg-white shadow-md sticky top-0 z-50 border-b border-gray-200">
+      <div className="max-w-7xl mx-auto px-8 py-6">
+        {/* Logo et titre */}
+        <div className="flex items-center justify-center mb-6">
           <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
               <span className="text-white text-2xl font-bold">ع</span>
@@ -16,18 +17,13 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <nav className="flex items-center justify-center gap-6 flex-wrap">
-          <Link
-            to="/"
-            className="px-4 py-2 rounded-full font-semibold text-gray-700 hover:bg-blue-600 hover:text-white transition-all duration-200"
-          >
-            الكل
-          </Link>
+        {/* Navigation */}
+        <nav className="flex items-center justify-center gap-4 flex-wrap">
           {categories.map((cat) => (
             <Link
               key={cat}
-              to={`/?category=${encodeURIComponent(cat)}`}
-              className="px-4 py-2 rounded-full font-semibold text-gray-700 hover:bg-blue-600 hover:text-white transition-all duration-200"
+              to={cat === 'الكل' ? '/' : `/?category=${encodeURIComponent(cat)}`}
+              className="px-4 py-2 rounded-full font-semibold text-gray-700 hover:bg-blue-600 hover:text-white transition-all duration-200 text-sm"
             >
               {cat}
             </Link>
