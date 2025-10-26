@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { newsData, categories } from './data';
 
 export default function Home(): JSX.Element {
@@ -13,6 +14,14 @@ export default function Home(): JSX.Element {
 
   return (
     <div dir="rtl" lang="ar" className="min-h-screen bg-gray-50 text-gray-900 font-sans leading-relaxed text-lg">
+      <Helmet>
+        <title>بوابة الأخبار العربية - مصدرك الموثوق للأخبار العاجلة</title>
+        <meta name="description" content="مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية، مع تغطية شاملة للأحداث السياسية والاقتصادية والثقافية والبيئية." />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="بوابة الأخبار العربية" />
+        <meta property="og:description" content="مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية" />
+        <meta property="og:site_name" content="بوابة الأخبار العربية" />
+      </Helmet>
       <header className="bg-white shadow-md py-6 px-8 sticky top-0 z-50 border-b border-gray-200">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-12 w-full md:w-auto">

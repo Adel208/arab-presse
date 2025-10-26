@@ -1,9 +1,17 @@
 import { useParams, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { newsData } from './data';
 
 export default function ArticleDetail() {
   const { id } = useParams<{ id: string }>();
   const article = newsData.find(item => item.id === parseInt(id || '0', 10));
+  
+  // Construire l'URL absolue pour l'image
+  const imageUrl = article?.id === 7 
+    ? `${window.location.origin}/img/gabesmanif.webp`
+    : `${window.location.origin}/vite.svg`;
+  
+  const articleUrl = window.location.href;
 
   if (!article) {
     return (
@@ -20,6 +28,30 @@ export default function ArticleDetail() {
 
   return (
     <div dir="rtl" lang="ar" className="min-h-screen bg-gray-50">
+      <Helmet>
+        <title>{article.title} - بوابة الأخبار العربية</title>
+        <meta name="description" content={article.metaDescription || article.summary} />
+        <meta name="keywords" content={article.keywords || ''} />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={articleUrl} />
+        <meta property="og:title" content={article.title} />
+        <meta property="og:description" content={article.metaDescription || article.summary} />
+        <meta property="og:image" content={imageUrl} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="بوابة الأخبار العربية" />
+        <meta property="article:published_time" content={article.date} />
+        <meta property="article:section" content={article.category} />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={articleUrl} />
+        <meta name="twitter:title" content={article.title} />
+        <meta name="twitter:description" content={article.metaDescription || article.summary} />
+        <meta name="twitter:image" content={imageUrl} />
+      </Helmet>
       <header className="bg-white shadow-md py-6 px-8 border-b border-gray-200">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold">
