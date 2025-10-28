@@ -26,3 +26,9 @@ dist-ssr
 # Automation config with API keys (DO NOT COMMIT)
 automation/config/config.json
 automation/logs/
+
+# Backup files
+*.backup
+
+# Unused article images from Pexels
+public/img/article-*.jpg

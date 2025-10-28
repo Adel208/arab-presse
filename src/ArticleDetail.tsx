@@ -2,8 +2,6 @@ import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { newsData } from './data';
 
-// v2.0.1 - Image display fix
-
 export default function ArticleDetail() {
   const { slug } = useParams<{ slug: string }>();
   const article = newsData.find(item => item.slug === slug);
