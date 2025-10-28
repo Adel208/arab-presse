@@ -103,7 +103,19 @@ export default function ArticleDetail() {
         <article className="bg-white rounded-xl shadow-lg overflow-hidden">
           {/* Hero Section */}
           <div className="relative w-full h-96 md:h-[500px] overflow-hidden">
-            {article.id === 7 ? (
+            {article.image ? (
+              <>
+                <img 
+                  src={article.image}
+                  alt={article.imageAlt || article.title}
+                  width="1200"
+                  height="800"
+                  loading="eager"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40"></div>
+              </>
+            ) : article.id === 7 ? (
               <>
                 <img 
                   src="/img/gabesmanif.webp" 

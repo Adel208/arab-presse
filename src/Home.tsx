@@ -109,7 +109,19 @@ export default function Home(): JSX.Element {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredNews.map((item) => (
                 <article key={item.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-2xl hover:-translate-y-3 transition-all duration-300 group border border-gray-100">
-                  {item.id === 7 ? (
+{item.image ? (
+                    <div className="relative w-full h-56 overflow-hidden">
+                      <img
+                        src={item.image}
+                        alt={item.imageAlt || item.title}
+                        width="400"
+                        height="300"
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    </div>
+                  ) : item.id === 7 ? (
                     <div className="relative w-full h-56 overflow-hidden">
                       <img
                         src="/img/gabesmanif.webp"
