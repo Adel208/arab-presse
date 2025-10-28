@@ -10,29 +10,54 @@ if (!existsSync(dataPath)) {
 
 const dataContent = readFileSync(dataPath, 'utf-8');
 
-// Extraire les articles depuis le tableau newsData (format simplifié)
-// Chercher tous les blocs { id: X, ... }
-const articlePattern = /\{\s*id:\s*(\d+),[\s\S]*?slug:\s*['"]([^'"]+)['"],[\s\S]*?title:\s*`([^`]+)`,[\s\S]*?summary:\s*`([^`]+)`,[\s\S]*?category:\s*['"]([^'"]+)['"],[\s\S]*?date:\s*['"]([^'"]+)['"]([\s\S]*?)content:\s*`/g;
+// Extraire tous les articles - méthode plus robuste
 const articles = [];
-let match;
+const lines = dataContent.split('\n');
+let currentArticle = null;
+let inArticle = false;
 
-while ((match = articlePattern.exec(dataContent)) !== null) {
-  // Extraire l'image depuis match[7] si elle existe
-  let image = null;
-  const imageMatch = match[7] ? match[7].match(/image:\s*['"]([^'"]*)['"]/) : null;
-  if (imageMatch) {
-    image = imageMatch[1];
+for (let i = 0; i < lines.length; i++) {
+  const line = lines[i];
+  
+  // Détecter le début d'un article
+  if (line.trim().match(/^\{\s*$/)) {
+    inArticle = true;
+    currentArticle = {};
+    continue;
   }
-
-  articles.push({
-    id: parseInt(match[1]),
-    slug: match[2],
-    title: match[3],
-    description: match[4],
-    category: match[5],
-    date: match[6],
-    image: image
-  });
+  
+  // Détecter la fin d'un article
+  if (inArticle && line.trim() === '},') {
+    if (currentArticle.id && currentArticle.slug) {
+      articles.push(currentArticle);
+    }
+    inArticle = false;
+    currentArticle = null;
+    continue;
+  }
+  
+  // Extraire les champs
+  if (inArticle && currentArticle) {
+    const idMatch = line.match(/id:\s*(\d+)/);
+    const slugMatch = line.match(/slug:\s*['"]([^'"]+)['"]/);
+    const titleMatch = line.match(/title:\s*`([^`]+)`/);
+    const summaryMatch = line.match(/summary:\s*`([^`]+)`/);
+    const categoryMatch = line.match(/category:\s*['"]([^'"]+)['"]/);
+    const dateMatch = line.match(/date:\s*['"]([^'"]+)['"]/);
+    const imageMatch = line.match(/image:\s*['"]([^'"]*)['"]/);
+    
+    if (idMatch) currentArticle.id = parseInt(idMatch[1]);
+    if (slugMatch) currentArticle.slug = slugMatch[1];
+    if (titleMatch) currentArticle.title = titleMatch[1];
+    if (summaryMatch) currentArticle.description = summaryMatch[1];
+    if (categoryMatch) currentArticle.category = categoryMatch[1];
+    if (dateMatch) {
+      let date = dateMatch[1];
+      if (date.includes('T')) date = date.split('T')[0];
+      currentArticle.date = date;
+    }
+    if (imageMatch) currentArticle.image = imageMatch[1];
+  }
 }
 
 const baseUrl = process.env.URL || 'https://arabpress.netlify.app';
@@ -54,8 +79,8 @@ articles.forEach(article => {
   const articleDir = join('dist', 'article', article.slug);
   mkdirSync(articleDir, { recursive: true });
 
-    const articleUrl = `${baseUrl}/article/${article.slug}`;
-    const imageUrl = article.image ? `${baseUrl}${article.image}` : null;
+  const articleUrl = `${baseUrl}/article/${article.slug}`;
+  const imageUrl = article.image ? `${baseUrl}${article.image}` : null;
 
   const html = `<!doctype html>
 <html lang="ar" dir="rtl">
@@ -63,13 +88,13 @@ articles.forEach(article => {
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="${article.description.replace(/"/g, '&quot;')}" />
+    <meta name="description" content="${(article.description || '').replace(/"/g, '&quot;')}" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article" />
     <meta property="og:url" content="${articleUrl}" />
-    <meta property="og:title" content="${article.title.replace(/"/g, '&quot;')}" />
-    <meta property="og:description" content="${article.description.replace(/"/g, '&quot;')}" />
+    <meta property="og:title" content="${(article.title || '').replace(/"/g, '&quot;')}" />
+    <meta property="og:description" content="${(article.description || '').replace(/"/g, '&quot;')}" />
     ${imageUrl ? `<meta property="og:image" content="${imageUrl}" />
     <meta property="og:image:secure_url" content="${imageUrl}" />
     <meta property="og:image:width" content="1200" />
@@ -82,11 +107,11 @@ articles.forEach(article => {
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="${articleUrl}" />
-    <meta name="twitter:title" content="${article.title.replace(/"/g, '&quot;')}" />
-    <meta name="twitter:description" content="${article.description.replace(/"/g, '&quot;')}" />
+    <meta name="twitter:title" content="${(article.title || '').replace(/"/g, '&quot;')}" />
+    <meta name="twitter:description" content="${(article.description || '').replace(/"/g, '&quot;')}" />
     ${imageUrl ? `<meta name="twitter:image" content="${imageUrl}" />` : ''}
     
-    <title>${article.title.replace(/"/g, '&quot;')} - صدى العرب</title>
+    <title>${(article.title || '').replace(/"/g, '&quot;')} - صدى العرب</title>
     <script type="module" crossorigin src="${jsFile}"></script>
     <link rel="stylesheet" crossorigin href="${cssFile}">
   </head>
@@ -96,7 +121,7 @@ articles.forEach(article => {
 </html>`;
 
   writeFileSync(join(articleDir, 'index.html'), html);
-  console.log(`✅ Generated: /article/${article.id}/index.html`);
+  console.log(`✅ Generated: /article/${article.slug}/index.html`);
 });
 
 console.log(`🎉 Generated ${articles.length} article pages successfully!`);
