@@ -1,4 +1,4 @@
-# بوابة الأخبار العربية
+# صدى العرب
 
 Portail d'actualités en langue arabe avec interface moderne et responsive.
 
@@ -155,5 +155,5 @@ Texte de l'article...`
 
 ## 📄 Licence
 
-Tous droits réservés © 2023 بوابة الأخبار العربية
+Tous droits réservés © 2023 صدى العرب
 

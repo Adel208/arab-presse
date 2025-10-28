@@ -1,6 +1,6 @@
 # 🚀 Améliorations SEO Implémentées
 
-Ce document décrit toutes les améliorations SEO apportées au site **بوابة الأخبار العربية**.
+Ce document décrit toutes les améliorations SEO apportées au site **صدى العرب**.
 
 ## ✅ Améliorations Réalisées
 
@@ -28,7 +28,7 @@ Implémentées dans tous les composants :
 ```json
 {
   "@type": "WebSite",
-  "name": "بوابة الأخبار العربية",
+  "name": "صدى العرب",
   "inLanguage": "ar"
 }
 ```

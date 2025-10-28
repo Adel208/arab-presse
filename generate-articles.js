@@ -73,7 +73,7 @@ articles.forEach(article => {
     ${imageUrl ? `<meta property="og:image" content="${imageUrl}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />` : ''}
-    <meta property="og:site_name" content="بوابة الأخبار العربية" />
+    <meta property="og:site_name" content="صدى العرب" />
     <meta property="article:published_time" content="${article.date}" />
     <meta property="article:section" content="${article.category}" />
     
@@ -84,7 +84,7 @@ articles.forEach(article => {
     <meta name="twitter:description" content="${article.description.replace(/"/g, '&quot;')}" />
     ${imageUrl ? `<meta name="twitter:image" content="${imageUrl}" />` : ''}
     
-    <title>${article.title.replace(/"/g, '&quot;')} - بوابة الأخبار العربية</title>
+    <title>${article.title.replace(/"/g, '&quot;')} - صدى العرب</title>
     <script type="module" crossorigin src="${jsFile}"></script>
     <link rel="stylesheet" crossorigin href="${cssFile}">
   </head>

@@ -24,13 +24,13 @@ export default function Home(): JSX.Element {
   const homeStructuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "بوابة الأخبار العربية",
+    "name": "صدى العرب",
     "url": window.location.origin,
     "description": "مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية",
     "inLanguage": "ar",
     "publisher": {
       "@type": "Organization",
-      "name": "بوابة الأخبار العربية",
+      "name": "صدى العرب",
       "logo": {
         "@type": "ImageObject",
         "url": `${window.location.origin}/vite.svg`
@@ -45,19 +45,19 @@ export default function Home(): JSX.Element {
   return (
     <div dir="rtl" lang="ar" className="bg-gray-50 text-gray-900 font-sans">
       <Helmet>
-        <title>بوابة الأخبار العربية - مصدرك الموثوق للأخبار العاجلة</title>
+        <title>صدى العرب - مصدرك الموثوق للأخبار العاجلة</title>
         <meta name="description" content="مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية، مع تغطية شاملة للأحداث السياسية والاقتصادية والثقافية والبيئية." />
         <link rel="canonical" href={canonicalUrl} />
         
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:title" content="بوابة الأخبار العربية" />
+        <meta property="og:title" content="صدى العرب" />
         <meta property="og:description" content="مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية" />
-        <meta property="og:site_name" content="بوابة الأخبار العربية" />
+        <meta property="og:site_name" content="صدى العرب" />
         <meta property="og:image" content={`${window.location.origin}/img/gabesmanif.webp`} />
         
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="بوابة الأخبار العربية" />
+        <meta name="twitter:title" content="صدى العرب" />
         <meta name="twitter:description" content="مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية" />
         
         <script type="application/ld+json">

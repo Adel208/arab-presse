@@ -1,4 +1,4 @@
-# robots.txt pour بوابة الأخبار العربية
+# robots.txt pour صدى العرب
 
 # Autoriser tous les robots par défaut
 User-agent: *

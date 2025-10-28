@@ -16,7 +16,7 @@ export default function Navbar() {
               <span className="text-white text-2xl font-bold">ع</span>
             </div>
             <h1 className="text-2xl lg:text-3xl font-extrabold text-blue-700 tracking-tight whitespace-nowrap">
-              بوابة الأخبار العربية
+              صدى العرب
             </h1>
           </Link>
 
@@ -41,7 +41,7 @@ export default function Navbar() {
               <span className="text-white text-2xl font-bold">ع</span>
             </div>
             <h1 className="text-xl font-extrabold text-blue-700 tracking-tight">
-              بوابة الأخبار العربية
+              صدى العرب
             </h1>
           </Link>
 

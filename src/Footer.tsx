@@ -80,7 +80,7 @@ export default function Footer() {
         <div className="border-t border-gray-800 pt-8 mt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-400 text-sm">
-              © {currentYear} بوابة الأخبار العربية. جميع الحقوق محفوظة.
+              © {currentYear} صدى العرب. جميع الحقوق محفوظة.
             </p>
             <p className="text-gray-500 text-xs">
               صُمم بـ ❤️ للعالم العربي

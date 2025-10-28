@@ -67,7 +67,7 @@ function generateSitemap() {
     if (articleDateObj >= twoDaysAgo) {
       xml += `    <news:news>
       <news:publication>
-        <news:name>بوابة الأخبار العربية</news:name>
+        <news:name>صدى العرب</news:name>
         <news:language>ar</news:language>
       </news:publication>
       <news:publication_date>${articleDate}</news:publication_date>

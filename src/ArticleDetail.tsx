@@ -48,7 +48,7 @@ export default function ArticleDetail() {
     },
     "publisher": {
       "@type": "Organization",
-      "name": "بوابة الأخبار العربية",
+      "name": "صدى العرب",
       "logo": {
         "@type": "ImageObject",
         "url": `${window.location.origin}/vite.svg`
@@ -66,7 +66,7 @@ export default function ArticleDetail() {
   return (
     <div dir="rtl" lang="ar" className="min-h-screen bg-gray-50">
       <Helmet>
-        <title>{article.title} - بوابة الأخبار العربية</title>
+        <title>{article.title} - صدى العرب</title>
         <meta name="description" content={article.metaDescription || article.summary} />
         <meta name="keywords" content={article.keywords || ''} />
         <meta name="author" content={article.author || "هيئة التحرير"} />
@@ -80,7 +80,7 @@ export default function ArticleDetail() {
         <meta property="og:image" content={imageUrl} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:site_name" content="بوابة الأخبار العربية" />
+        <meta property="og:site_name" content="صدى العرب" />
         <meta property="article:published_time" content={article.date} />
         <meta property="article:modified_time" content={article.date} />
         <meta property="article:author" content={article.author || "هيئة التحرير"} />
