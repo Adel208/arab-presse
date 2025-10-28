@@ -1,29 +1,41 @@
-import { writeFileSync, mkdirSync, readdirSync, readFileSync } from 'fs';
+import { writeFileSync, mkdirSync, readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 
-const articles = [
-  {
-    id: 7,
-    title: 'قابس تختنق: مدينة الموت البطيء بين وعود السلطة وصمود الأهالي',
-    description: 'تعيش قابس التونسية أزمة بيئية خانقة دفعت آلاف السكان إلى الشوارع احتجاجًا على التلوث الصناعي، وسط وعود حكومية واتهامات بالإهمال والتواطؤ.',
-    image: '/img/gabesmanif.webp',
-    date: '2025-01-15',
-    category: 'بيئة'
-  },
-  {
-    id: 8,
-    title: 'حركة GenZ 212 في المغرب: الشباب يطالب بإسقاط الحكومة والمستشفيات بدل الملاعب',
-    description: 'انطلقت احتجاجات هي الأكبر منذ عقود في المغرب بقيادة GenZ 212، حيث يطالب الشباب بخدمات صحية وتعليمية لائقة، ويقفون ضد الحكومة وسياسات الإنفاق المتهورة.',
-    image: '/img/marocmanif.webp',
-    date: '2025-09-28',
-    category: 'سياسة'
-  }
-];
+// Lire data.ts brut et extraire les articles
+const dataPath = join('src', 'data.ts');
+if (!existsSync(dataPath)) {
+  console.log('⚠️  src/data.ts not found, skipping article generation');
+  process.exit(0);
+}
+
+const dataContent = readFileSync(dataPath, 'utf-8');
+
+// Extraire les articles depuis le tableau newsData (format simplifié)
+// Chercher tous les blocs { id: X, ... }
+const articlePattern = /\{\s*id:\s*(\d+),[\s\S]*?slug:\s*['"]([^'"]+)['"],[\s\S]*?title:\s*`([^`]+)`,[\s\S]*?summary:\s*`([^`]+)`,[\s\S]*?category:\s*['"]([^'"]+)['"],[\s\S]*?date:\s*['"]([^'"]+)['"]/g;
+const articles = [];
+let match;
+
+while ((match = articlePattern.exec(dataContent)) !== null) {
+  articles.push({
+    id: parseInt(match[1]),
+    slug: match[2],
+    title: match[3],
+    description: match[4],
+    category: match[5],
+    date: match[6]
+  });
+}
 
 const baseUrl = process.env.URL || 'https://arabpress.netlify.app';
 
 // Lire l'index.html principal pour obtenir les références correctes des assets
 const mainIndexPath = join('dist', 'index.html');
+if (!existsSync(mainIndexPath)) {
+  console.log('⚠️  dist/index.html not found');
+  process.exit(0);
+}
+
 const mainIndexContent = readFileSync(mainIndexPath, 'utf-8');
 const jsMatch = mainIndexContent.match(/<script[^>]+src="([^"]+)"/);
 const cssMatch = mainIndexContent.match(/<link[^>]+href="([^"]+\.css)"/);
@@ -34,7 +46,6 @@ articles.forEach(article => {
   const articleDir = join('dist', 'article', String(article.id));
   mkdirSync(articleDir, { recursive: true });
 
-  const imageUrl = `${baseUrl}${article.image}`;
   const articleUrl = `${baseUrl}/article/${article.id}`;
 
   const html = `<!doctype html>
@@ -43,18 +54,13 @@ articles.forEach(article => {
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="${article.description}" />
+    <meta name="description" content="${article.description.replace(/"/g, '&quot;')}" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article" />
     <meta property="og:url" content="${articleUrl}" />
-    <meta property="og:title" content="${article.title}" />
-    <meta property="og:description" content="${article.description}" />
-    <meta property="og:image" content="${imageUrl}" />
-    <meta property="og:image:secure_url" content="${imageUrl}" />
-    <meta property="og:image:type" content="image/webp" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:title" content="${article.title.replace(/"/g, '&quot;')}" />
+    <meta property="og:description" content="${article.description.replace(/"/g, '&quot;')}" />
     <meta property="og:site_name" content="بوابة الأخبار العربية" />
     <meta property="article:published_time" content="${article.date}" />
     <meta property="article:section" content="${article.category}" />
@@ -62,11 +68,10 @@ articles.forEach(article => {
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="${articleUrl}" />
-    <meta name="twitter:title" content="${article.title}" />
-    <meta name="twitter:description" content="${article.description}" />
-    <meta name="twitter:image" content="${imageUrl}" />
+    <meta name="twitter:title" content="${article.title.replace(/"/g, '&quot;')}" />
+    <meta name="twitter:description" content="${article.description.replace(/"/g, '&quot;')}" />
     
-    <title>${article.title} - بوابة الأخبار العربية</title>
+    <title>${article.title.replace(/"/g, '&quot;')} - بوابة الأخبار العربية</title>
     <script type="module" crossorigin src="${jsFile}"></script>
     <link rel="stylesheet" crossorigin href="${cssFile}">
   </head>
@@ -79,5 +84,4 @@ articles.forEach(article => {
   console.log(`✅ Generated: /article/${article.id}/index.html`);
 });
 
-console.log('🎉 Article pages generated successfully!');
-
+console.log(`🎉 Generated ${articles.length} article pages successfully!`);

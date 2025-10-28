@@ -5,16 +5,15 @@
   
   <!-- Page d'accueil -->
   <url>
-    <loc>https://yourdomain.com/</loc>
-    <lastmod>2025-10-26</lastmod>
+    <loc>https://arabpress.netlify.app/</loc>
+    <lastmod>2025-10-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   
-  <!-- Articles -->
   <url>
-    <loc>https://yourdomain.com/article/7/gabes-pollution-environnement</loc>
-    <lastmod>2025-01-15</lastmod>
+    <loc>https://arabpress.netlify.app/article/1</loc>
+    <lastmod>2025-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <news:news>
@@ -22,19 +21,15 @@
         <news:name>بوابة الأخبار العربية</news:name>
         <news:language>ar</news:language>
       </news:publication>
-      <news:publication_date>2025-01-15</news:publication_date>
-      <news:title>قابس تختنق: مدينة الموت البطيء بين وعود السلطة وصمود الأهالي</news:title>
-      <news:keywords>قابس، تونس، التلوث الصناعي، الفوسفوجبسوم</news:keywords>
+      <news:publication_date>2025-10-28</news:publication_date>
+      <news:title>تونس تعلق نشاط المنتدى التونسي للحقوق الاقتصادية والاجتماعية وسط مخاوف من تضييق على المجتمع المدني</news:title>
+      <news:keywords>تونس, المنتدى التونسي للحقوق الاقتصادية والاجتماعية, المجتمع المدني, حقوق الإنسان, التمويل الأجنبي</news:keywords>
     </news:news>
-    <image:image>
-      <image:loc>https://yourdomain.com/img/gabesmanif.webp</image:loc>
-      <image:title>احتجاجات في مدينة قابس ضد التلوث البيئي</image:title>
-    </image:image>
   </url>
   
   <url>
-    <loc>https://yourdomain.com/article/8/maroc-genz-212-manifestations</loc>
-    <lastmod>2025-09-28</lastmod>
+    <loc>https://arabpress.netlify.app/article/10</loc>
+    <lastmod>2025-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <news:news>
@@ -42,94 +37,62 @@
         <news:name>بوابة الأخبار العربية</news:name>
         <news:language>ar</news:language>
       </news:publication>
-      <news:publication_date>2025-09-28</news:publication_date>
-      <news:title>حركة GenZ 212 في المغرب: الشباب يطالب بإسقاط الحكومة</news:title>
-      <news:keywords>المغرب، GenZ 212، احتجاجات المغرب</news:keywords>
+      <news:publication_date>2025-10-28</news:publication_date>
+      <news:title>الأمم المتحدة تحذر من كارثة إنسانية وشيكة في الفاشر بعد إعلان البرهان انسحاب الجيش السوداني</news:title>
+      <news:keywords>الفاشر, السودان, الدعم السريع, البرهان, الجيش السوداني, دارفور, الأمم المتحدة, أزمة إنسانية, نزوح, صراع السودان</news:keywords>
     </news:news>
-    <image:image>
-      <image:loc>https://yourdomain.com/img/marocmanif.webp</image:loc>
-      <image:title>احتجاجات حركة GenZ 212 في المغرب</image:title>
-    </image:image>
   </url>
   
   <url>
-    <loc>https://yourdomain.com/article/1/developpements-politiques-moyen-orient</loc>
-    <lastmod>2023-10-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://arabpress.netlify.app/article/11</loc>
+    <lastmod>2025-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <news:news>
+      <news:publication>
+        <news:name>بوابة الأخبار العربية</news:name>
+        <news:language>ar</news:language>
+      </news:publication>
+      <news:publication_date>2025-10-28</news:publication_date>
+      <news:title>تركيا توقع صفقة تاريخية لشراء 20 طائرة يوروفايتر تايفون من بريطانيا بـ8 مليارات جنيه إسترليني</news:title>
+      <news:keywords>تركيا, يوروفايتر تايفون, بريطانيا, صفقة عسكرية, قطر, سلطنة عمان, القوات الجوية التركية, حلف الناتو, الصناعات الدفاعية</news:keywords>
+    </news:news>
   </url>
   
   <url>
-    <loc>https://yourdomain.com/article/2/baisse-prix-petrole-mondial</loc>
-    <lastmod>2023-10-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>https://yourdomain.com/article/3/exploit-sportif-arabe-olympiade</loc>
-    <lastmod>2023-10-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>https://yourdomain.com/article/4/innovations-technologiques-arabes</loc>
-    <lastmod>2023-10-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>https://yourdomain.com/article/5/festival-culturel-international-riyadh</loc>
-    <lastmod>2023-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>https://yourdomain.com/article/6/rapport-economique-croissance-numerique</loc>
-    <lastmod>2023-09-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <!-- Pages catégories -->
-  <url>
-    <loc>https://yourdomain.com/?category=سياسة</loc>
+    <loc>https://arabpress.netlify.app/?category=%D8%B3%D9%8A%D8%A7%D8%B3%D8%A9</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://yourdomain.com/?category=اقتصاد</loc>
+    <loc>https://arabpress.netlify.app/?category=%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://yourdomain.com/?category=رياضة</loc>
+    <loc>https://arabpress.netlify.app/?category=%D8%B1%D9%8A%D8%A7%D8%B6%D8%A9</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://yourdomain.com/?category=تكنولوجيا</loc>
+    <loc>https://arabpress.netlify.app/?category=%D8%AA%D9%83%D9%86%D9%88%D9%84%D9%88%D8%AC%D9%8A%D8%A7</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://yourdomain.com/?category=ثقافة</loc>
+    <loc>https://arabpress.netlify.app/?category=%D8%AB%D9%82%D8%A7%D9%81%D8%A9</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://yourdomain.com/?category=بيئة</loc>
+    <loc>https://arabpress.netlify.app/?category=%D8%A8%D9%8A%D8%A6%D8%A9</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   
 </urlset>
-

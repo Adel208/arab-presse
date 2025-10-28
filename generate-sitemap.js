@@ -1,9 +1,28 @@
-import { newsData } from './src/data.ts';
 import fs from 'fs';
 import path from 'path';
 
+// Lire data.ts brut et extraire les articles
+const dataPath = path.join('src', 'data.ts');
+const dataContent = fs.readFileSync(dataPath, 'utf-8');
+
+// Extraire les articles depuis le tableau newsData
+const articlePattern = /\{\s*id:\s*(\d+),[\s\S]*?slug:\s*['"]([^'"]+)['"],[\s\S]*?title:\s*`([^`]+)`,[\s\S]*?category:\s*['"]([^'"]+)['"],[\s\S]*?date:\s*['"]([^'"]+)['"],[\s\S]*?keywords:\s*['"]([^'"]*)['"]/g;
+const articles = [];
+let match;
+
+while ((match = articlePattern.exec(dataContent)) !== null) {
+  articles.push({
+    id: parseInt(match[1]),
+    slug: match[2],
+    title: match[3],
+    category: match[4],
+    date: match[5],
+    keywords: match[6]
+  });
+}
+
 // Remplacez par votre domaine réel
-const DOMAIN = 'https://yourdomain.com';
+const DOMAIN = 'https://arabpress.netlify.app';
 
 function generateSitemap() {
   const currentDate = new Date().toISOString().split('T')[0];
@@ -24,8 +43,8 @@ function generateSitemap() {
 `;
 
   // Ajouter les articles
-  newsData.forEach(article => {
-    const articleDate = article.date.split('T')[0]; // Extraire la date sans l'heure
+  articles.forEach(article => {
+    const articleDate = article.date.split('T')[0];
     const hasImage = article.id === 7 || article.id === 8;
     const imageUrl = article.id === 7 
       ? `${DOMAIN}/img/gabesmanif.webp`
@@ -34,7 +53,7 @@ function generateSitemap() {
       : null;
 
     xml += `  <url>
-    <loc>${DOMAIN}/article/${article.slug}</loc>
+    <loc>${DOMAIN}/article/${article.id}</loc>
     <lastmod>${articleDate}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -93,4 +112,3 @@ function generateSitemap() {
 }
 
 generateSitemap();
-
