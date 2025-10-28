@@ -54,8 +54,10 @@ missingArticles.forEach(article => {
     <meta property="og:title" content="${article.title.replace(/"/g, '&quot;')}" />
     <meta property="og:description" content="${article.description.replace(/"/g, '&quot;')}" />
     ${imageUrl ? `<meta property="og:image" content="${imageUrl}" />
+    <meta property="og:image:secure_url" content="${imageUrl}" />
     <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />` : ''}
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/webp" />` : ''}
     <meta property="og:site_name" content="صدى العرب" />
     <meta property="article:published_time" content="${article.date}" />
     <meta property="article:section" content="${article.category}" />
