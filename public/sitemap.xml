@@ -60,6 +60,38 @@
   </url>
   
   <url>
+    <loc>https://arabpress.netlify.app/article/12</loc>
+    <lastmod>2025-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <news:news>
+      <news:publication>
+        <news:name>بوابة الأخبار العربية</news:name>
+        <news:language>ar</news:language>
+      </news:publication>
+      <news:publication_date>2025-10-28</news:publication_date>
+      <news:title>مستقبل دارفور بعد سيطرة الدعم السريع على الفاشر: تحولات استراتيجية وأزمة إنسانية متفاقمة</news:title>
+      <news:keywords>دارفور, الفاشر, الدعم السريع, السودان, الحرب السودانية, أزمة إنسانية, نزوح, الجيش السوداني</news:keywords>
+    </news:news>
+  </url>
+  
+  <url>
+    <loc>https://arabpress.netlify.app/article/13</loc>
+    <lastmod>2025-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <news:news>
+      <news:publication>
+        <news:name>بوابة الأخبار العربية</news:name>
+        <news:language>ar</news:language>
+      </news:publication>
+      <news:publication_date>2025-10-28</news:publication_date>
+      <news:title>تونس تعلق نشاط المنتدى التونسي للحقوق الاقتصادية والاجتماعية وسط تصاعد المخاوف من تضييق الحريات</news:title>
+      <news:keywords>تونس, المجتمع المدني, الحقوق الاقتصادية والاجتماعية, التمويل الأجنبي, الحريات, قيس سعيد</news:keywords>
+    </news:news>
+  </url>
+  
+  <url>
     <loc>https://arabpress.netlify.app/?category=%D8%B3%D9%8A%D8%A7%D8%B3%D8%A9</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
