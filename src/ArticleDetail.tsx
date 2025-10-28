@@ -105,45 +105,17 @@ export default function ArticleDetail() {
         <article className="bg-white rounded-xl shadow-lg overflow-hidden">
           {/* Hero Section */}
           <div className="relative w-full h-96 md:h-[500px] overflow-hidden">
-            {article.image ? (
-              <>
-                <img 
-                  src={article.image}
-                  alt={article.imageAlt || article.title}
-                  width="1200"
-                  height="800"
-                  loading="eager"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40"></div>
-              </>
-            ) : article.id === 7 ? (
-              <>
-                <img 
-                  src="/img/gabesmanif.webp" 
-                  alt="احتجاجات في مدينة قابس ضد التلوث البيئي"
-                  width="1200"
-                  height="800"
-                  loading="eager"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40"></div>
-              </>
-            ) : article.id === 8 ? (
-              <>
-                <img 
-                  src="/img/marocmanif.webp" 
-                  alt="احتجاجات حركة GenZ 212 في المغرب"
-                  width="1200"
-                  height="800"
-                  loading="eager"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40"></div>
-              </>
-            ) : (
-              <div className="absolute inset-0 bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900"></div>
+            {article.image && (
+              <img 
+                src={article.image}
+                alt={article.imageAlt || article.title}
+                width="1200"
+                height="800"
+                loading="eager"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
             )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40"></div>
             <div className="relative z-10 h-full flex items-center justify-center text-center px-8">
               <div>
                 <span className="inline-block px-4 py-2 bg-red-600 text-white text-sm font-bold rounded-full mb-4">
