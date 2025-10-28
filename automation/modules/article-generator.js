@@ -70,52 +70,73 @@ class ArticleGenerator {
   async generateArticle(newsItem) {
     await this.log(`Génération d'article pour: ${newsItem.title}`);
 
-    const prompt = `Tu es un journaliste professionnel spécialisé dans le monde arabe. Tu dois rédiger un article complet en arabe (langue arabe standard moderne) basé sur cette information :
+    const prompt = `Tu es un rédacteur professionnel pour un média en ligne spécialisé dans l'actualité du monde arabe.  
+Ton objectif est de transformer cette information brute en **article journalistique original, vérifié et conforme aux règles de Google AdSense**.
 
+### CONTEXTE
+- Cette information provient d'une veille automatique à partir de sites d'actualité arabes.  
+- L'article doit être **inspiré du sujet**, mais **pas une reformulation mot à mot**.  
+- Il doit contenir une **analyse contextuelle** ou une **valeur ajoutée** (ex. impact local, comparaison régionale, perspective économique, sociale ou politique).  
+- Le ton doit être **neutre, informatif et professionnel**.
+
+### INFORMATIONS SOURCE
 TITRE: ${newsItem.title}
 RÉSUMÉ: ${newsItem.summary}
 CATÉGORIE SUGGÉRÉE: ${newsItem.suggestedCategory}
 SOURCE: ${newsItem.source}
 LIEN SOURCE: ${newsItem.link}
 
-INSTRUCTIONS IMPORTANTES:
+### INSTRUCTIONS SPÉCIALES
+- Rédige le contenu en **arabe moderne standard (العربية الفصحى)**.
+- Ne copie aucune phrase d'un autre média : reformule tout.  
+- N'invente pas de faits : reste factuel.  
+- Évite le style "clickbait".  
+- Ajoute toujours une **analyse ou perspective** propre à ton texte.  
+- Le contenu doit contenir environ **350 à 1000 mots**.
 
-1. STRUCTURE DE L'ARTICLE:
-   - Introduction captivante (2-3 paragraphes)
-   - Corps de l'article avec plusieurs sections bien développées (minimum 5 sections)
-   - Contexte et analyse approfondie
-   - Témoignages ou citations (si pertinent)
-   - Impact et implications
-   - Conclusion
+### QUALITÉ ET STRUCTURE
+1. **STRUCTURE DE L'ARTICLE**:
+   - Introduction captivante qui accroche le lecteur (2-3 paragraphes)
+   - Corps de l'article avec plusieurs sections bien développées
+   - Sous-titres descriptifs avec ##
+   - Analyse contextuelle et perspective régionale
+   - Impact et implications pour le monde arabe
+   - Conclusion concise
 
-2. QUALITÉ RÉDACTIONNELLE:
-   - Style journalistique professionnel
-   - Ton neutre et objectif
+2. **QUALITÉ RÉDACTIONNELLE**:
+   - Style journalistique professionnel et neutre
    - Phrases claires et bien structurées
-   - Minimum 1500 mots
-   - Utilise l'arabe standard moderne (فصحى)
+   - Vocabulaire riche et précis en arabe moderne
 
-3. SEO ET MOTS-CLÉS:
-   - Intègre naturellement des mots-clés pertinents
-   - Utilise des sous-titres descriptifs (##)
-   - Optimise pour le référencement
+3. **CONFORMITÉ ADSENSE**:
+   - Contenu original et non dupliqué
+   - Informations factuelles et vérifiables
+   - Pas de contenu trompeur ou sensationaliste
+   - Pas de contenu discriminatoire ou offensant
 
-4. FORMAT DE SORTIE:
-   Tu dois répondre UNIQUEMENT avec un objet JSON valide (pas de markdown, pas de texte avant ou après) ayant cette structure EXACTE:
+### FORMAT DE SORTIE
+Réponds **UNIQUEMENT au format JSON** suivant (pas de markdown, pas de texte avant ou après) :
 
 {
-  "title": "Titre optimisé en arabe",
-  "summary": "Résumé accrocheur de 2-3 phrases (150-200 caractères)",
-  "category": "catégorie parmi: سياسة, اقتصاد, رياضة, تكنولوجيا, ثقافة, بيئة",
-  "content": "Article complet en markdown avec ## pour les sous-titres",
-  "metaDescription": "Description SEO (150-160 caractères)",
+  "title": "Titre accrocheur et concis en arabe (max 80 caractères)",
+  "summary": "Résumé de 2 phrases qui synthétise le sujet",
+  "category": "Catégorie parmi: سياسة, اقتصاد, رياضة, تكنولوجيا, ثقافة, بيئة",
+  "content": "Article complet en Markdown, environ 350-1000 mots.\n\nUtilise ## pour les sous-titres de section.\nInclure un paragraphe d'analyse personnelle ou régionale.\nTerminer par : 'Sources : [nom de la source]'\nEt une note en italique : '*Cet article a été généré à l'aide d'outils d'intelligence artificielle et vérifié par la rédaction avant publication.*'",
+  "metaDescription": "Courte description (max 160 caractères, optimisée pour les moteurs de recherche)",
   "keywords": "mot-clé1, mot-clé2, mot-clé3, mot-clé4, mot-clé5",
   "author": "فريق تحرير عرب برس",
-  "imageSearchTerms": "mot clé anglais 1, mot clé anglais 2, mot clé anglais 3",
-  "imageAlt": "Description de l'image en arabe"
+  "imageSearchTerms": "termes anglais pour rechercher une image libre de droit, exemple: arab news protest middle east",
+  "imageAlt": "Description de l'image en arabe pour l'accessibilité"
 }
 
-IMPORTANT: Réponds UNIQUEMENT avec le JSON, rien d'autre. Assure-toi que le JSON est valide et complet.`;
+CRITÈRES ESSENTIELS:
+- Le contenu doit contenir MINIMUM 350 mots et idéalement 800-1000 mots
+- Utilise l'arabe moderne standard (فصحى) exclusivement
+- Ajoute TOUJOURS une section d'analyse ou de perspective régionale
+- Inclut les sources à la fin de l'article
+- Assure-toi que le JSON est valide et complet
+
+IMPORTANT: Réponds UNIQUEMENT avec le JSON, rien d'autre avant ou après. Le JSON doit être valide.`;
 
     try {
       const message = await this.anthropic.messages.create({
@@ -216,12 +237,95 @@ IMPORTANT: Réponds UNIQUEMENT avec le JSON, rien d'autre. Assure-toi que le JSO
   }
 
   /**
+   * Calcule un score de qualité pour un article
+   */
+  calculateQualityScore(article) {
+    let score = 0;
+    const issues = [];
+    const warnings = [];
+
+    // Longueur du contenu (0-30 points)
+    const contentLength = article.content?.length || 0;
+    if (contentLength < 500) {
+      issues.push('Contenu trop court (moins de 500 caractères)');
+    } else if (contentLength < 1000) {
+      warnings.push('Contenu court (moins de 1000 caractères)');
+      score += 10;
+    } else if (contentLength < 2000) {
+      score += 25;
+    } else {
+      score += 30;
+    }
+
+    // Qualité du titre (0-15 points)
+    const titleLength = article.title?.length || 0;
+    if (titleLength >= 20 && titleLength <= 80) {
+      score += 15;
+    } else {
+      warnings.push('Titre en dehors de la plage optimale (20-80 caractères)');
+      score += 8;
+    }
+
+    // Présence de métadonnées essentielles (0-20 points)
+    if (article.summary && article.summary.length > 50) score += 5;
+    if (article.metaDescription && article.metaDescription.length > 100) score += 5;
+    if (article.keywords) score += 5;
+    if (article.category) score += 5;
+
+    // Originalité et analyse (0-20 points)
+    const content = article.content || '';
+    if (content.includes('##')) score += 5; // Présence de sous-titres
+    if (content.includes('Sources :') || content.includes('المصادر')) score += 5; // Sources mentionnées
+    if (content.includes('intelligence artificielle') || content.includes('ذكاء اصطناعي')) score += 5; // Mention IA
+    if (content.length > 1500) score += 5; // Contenu riche
+
+    // Analyse contextuelle (0-15 points)
+    const analysisKeywords = ['تحليل', 'تأثير', 'مقارنة', 'منظور', 'perspect', 'analy'];
+    const hasAnalysis = analysisKeywords.some(kw => content.toLowerCase().includes(kw));
+    if (hasAnalysis) score += 15;
+    else {
+      warnings.push('Absence d\'analyse contextuelle détectée');
+      score += 5;
+    }
+
+    return {
+      score: Math.min(100, score), // Maximum 100 points
+      issues,
+      warnings
+    };
+  }
+
+  /**
    * Sauvegarde les articles générés
    */
   async saveArticles(articles) {
     const outputPath = path.join(__dirname, '../logs/generated-articles.json');
-    await fs.writeFile(outputPath, JSON.stringify(articles, null, 2), 'utf-8');
+    
+    // Calculer les scores de qualité pour tous les articles
+    const articlesWithScores = articles.map(article => {
+      const quality = this.calculateQualityScore(article);
+      return {
+        ...article,
+        qualityScore: quality.score,
+        qualityIssues: quality.issues,
+        qualityWarnings: quality.warnings
+      };
+    });
+
+    await fs.writeFile(outputPath, JSON.stringify(articlesWithScores, null, 2), 'utf-8');
     await this.log(`Articles sauvegardés dans ${outputPath}`);
+    
+    // Afficher les scores
+    for (const article of articlesWithScores) {
+      await this.log(`\n${article.title.substring(0, 60)}...`);
+      await this.log(`   Score qualité: ${article.qualityScore}/100`);
+      if (article.qualityIssues.length > 0) {
+        await this.log(`   Problèmes: ${article.qualityIssues.join(', ')}`);
+      }
+      if (article.qualityWarnings.length > 0) {
+        await this.log(`   Avertissements: ${article.qualityWarnings.join(', ')}`);
+      }
+    }
   }
 
   /**

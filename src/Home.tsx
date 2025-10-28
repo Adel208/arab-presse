@@ -2,6 +2,10 @@ import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { newsData, categories } from './data';
+import AdBanner from './components/AdBanner';
+import AdUnit from './components/AdUnit';
+import { trackPageView } from './utils/analytics';
+import { adsConfig } from './config/ads';
 
 export default function Home(): JSX.Element {
   const [searchParams] = useSearchParams();
@@ -14,6 +18,9 @@ export default function Home(): JSX.Element {
     } else {
       setSelectedCategory('الكل');
     }
+    
+    // Track page view
+    trackPageView(window.location.pathname, 'Home');
   }, [searchParams]);
 
   const filteredNews = newsData.filter((item) =>
@@ -66,6 +73,9 @@ export default function Home(): JSX.Element {
       </Helmet>
 
       <div className="max-w-7xl mx-auto px-8 py-12">
+        {/* Bannière publicitaire en haut */}
+        <AdBanner slotId={adsConfig.slots.headerBanner} style={{ width: '100%', height: '90px' }} format="horizontal" />
+        
         {/* Hero Section - Breaking News */}
         {selectedCategory === 'الكل' && (
           <section className="mb-16">
@@ -174,31 +184,37 @@ export default function Home(): JSX.Element {
             )}
           </div>
 
-          {/* Sidebar - Categories */}
-          <aside className="lg:w-64 w-full bg-white rounded-xl shadow-lg p-6 sticky top-32 h-fit border border-gray-100">
-            <h3 className="text-2xl font-extrabold text-gray-900 mb-6 flex items-center gap-3 border-b border-gray-200 pb-4">
-              <span className="text-blue-600">التصنيفات</span>
-            </h3>
-            <ul className="space-y-1">
-              {categories.map((category) => (
-                <li key={category}>
-                  <Link
-                    to={category === 'الكل' ? '/' : `/?category=${encodeURIComponent(category)}`}
-                    onClick={() => setSelectedCategory(category)}
-                    className={`w-full block text-right py-4 px-6 rounded-lg font-semibold transition-all duration-200 flex items-center justify-between group ${
-                      selectedCategory === category 
-                        ? 'bg-blue-600 text-white shadow-md' 
-                        : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:shadow-sm'
-                    }`}
-                  >
-                    <span>{category}</span>
-                    <span className={`transform transition-transform duration-200 ${
-                      selectedCategory === category ? 'translate-x-2' : 'group-hover:translate-x-2'
-                    }`}>→</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          {/* Sidebar - Categories + Ads */}
+          <aside className="lg:w-64 w-full space-y-6">
+            {/* Catégories */}
+            <div className="bg-white rounded-xl shadow-lg p-6 sticky top-32 h-fit border border-gray-100">
+              <h3 className="text-2xl font-extrabold text-gray-900 mb-6 flex items-center gap-3 border-b border-gray-200 pb-4">
+                <span className="text-blue-600">التصنيفات</span>
+              </h3>
+              <ul className="space-y-1">
+                {categories.map((category) => (
+                  <li key={category}>
+                    <Link
+                      to={category === 'الكل' ? '/' : `/?category=${encodeURIComponent(category)}`}
+                      onClick={() => setSelectedCategory(category)}
+                      className={`w-full block text-right py-4 px-6 rounded-lg font-semibold transition-all duration-200 flex items-center justify-between group ${
+                        selectedCategory === category 
+                          ? 'bg-blue-600 text-white shadow-md' 
+                          : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:shadow-sm'
+                      }`}
+                    >
+                      <span>{category}</span>
+                      <span className={`transform transition-transform duration-200 ${
+                        selectedCategory === category ? 'translate-x-2' : 'group-hover:translate-x-2'
+                      }`}>→</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            {/* Publicité dans la sidebar */}
+            <AdUnit position="sidebar" className="sticky top-96" />
           </aside>
         </section>
       </div>

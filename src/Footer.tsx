@@ -38,10 +38,10 @@ export default function Footer() {
             <h4 className="text-white text-lg font-bold mb-4">روابط سريعة</h4>
             <ul className="space-y-2">
               <li><Link to="/" className="hover:text-blue-400 transition-colors">الصفحة الرئيسية</Link></li>
-              <li><a href="#about" className="hover:text-blue-400 transition-colors">من نحن</a></li>
-              <li><a href="#contact" className="hover:text-blue-400 transition-colors">اتصل بنا</a></li>
-              <li><a href="#privacy" className="hover:text-blue-400 transition-colors">سياسة الخصوصية</a></li>
-              <li><a href="#terms" className="hover:text-blue-400 transition-colors">شروط الاستخدام</a></li>
+              <li><Link to="/about" className="hover:text-blue-400 transition-colors">من نحن</Link></li>
+              <li><Link to="/contact" className="hover:text-blue-400 transition-colors">اتصل بنا</Link></li>
+              <li><Link to="/privacy" className="hover:text-blue-400 transition-colors">سياسة الخصوصية</Link></li>
+              <li><Link to="/terms" className="hover:text-blue-400 transition-colors">شروط الاستخدام</Link></li>
             </ul>
           </div>
 
