@@ -51,10 +51,10 @@ const jsFile = jsMatch ? jsMatch[1] : '/assets/index.js';
 const cssFile = cssMatch ? cssMatch[1] : '/assets/index.css';
 
 articles.forEach(article => {
-  const articleDir = join('dist', 'article', String(article.id));
+  const articleDir = join('dist', 'article', article.slug);
   mkdirSync(articleDir, { recursive: true });
 
-    const articleUrl = `${baseUrl}/article/${article.id}`;
+    const articleUrl = `${baseUrl}/article/${article.slug}`;
     const imageUrl = article.image ? `${baseUrl}${article.image}` : null;
 
   const html = `<!doctype html>
