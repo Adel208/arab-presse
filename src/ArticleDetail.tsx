@@ -105,7 +105,7 @@ export default function ArticleDetail() {
         <article className="bg-white rounded-xl shadow-lg overflow-hidden">
           {/* Hero Section */}
           <div className="relative w-full h-96 md:h-[500px] overflow-hidden">
-{article.image ? (
+            {article.image ? (
               <>
                 <img 
                   src={article.image}
