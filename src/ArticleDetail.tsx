@@ -7,7 +7,9 @@ export default function ArticleDetail() {
   const article = newsData.find(item => item.slug === slug);
   
   // Construire l'URL absolue pour l'image
-  const imageUrl = article?.id === 7 
+  const imageUrl = article?.image 
+    ? `${window.location.origin}${article.image}`
+    : article?.id === 7 
     ? `${window.location.origin}/img/gabesmanif.webp`
     : article?.id === 8
     ? `${window.location.origin}/img/marocmanif.webp`
@@ -103,7 +105,7 @@ export default function ArticleDetail() {
         <article className="bg-white rounded-xl shadow-lg overflow-hidden">
           {/* Hero Section */}
           <div className="relative w-full h-96 md:h-[500px] overflow-hidden">
-            {article.image ? (
+{article.image ? (
               <>
                 <img 
                   src={article.image}
