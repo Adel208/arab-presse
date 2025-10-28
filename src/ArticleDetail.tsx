@@ -134,6 +134,24 @@ export default function ArticleDetail() {
                 loading="eager"
                 className="absolute inset-0 w-full h-full object-cover"
               />
+            ) : article.id === 12 ? (
+              <img 
+                src="/img/darfoure.jpg" 
+                alt="تقرير عن دارفور"
+                width="1200"
+                height="800"
+                loading="eager"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            ) : article.id === 13 ? (
+              <img 
+                src="/img/tunispolic.jpg" 
+                alt="السلطات التونسية تعلق نشاط منظمات المجتمع المدني"
+                width="1200"
+                height="800"
+                loading="eager"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
             ) : null}
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40"></div>
             <div className="relative z-10 h-full flex items-center justify-center text-center px-8">
