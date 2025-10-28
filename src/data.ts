@@ -643,5 +643,5 @@ export const newsData: NewsItem[] = [
   }
 ];
 
-export const categories: string[] = ['الكل', 'سياسة', 'اقتصاد', 'رياضة', 'تكنولوجيا', 'ثقافة', 'بيئة'];
+export const categories: string[] = ['الكل', 'سياسة', 'اقتصاد', 'رياضة', 'تكنولوجيا', 'ثقافة'];
 
