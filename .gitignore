@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
+# Automation config with API keys (DO NOT COMMIT)
+automation/config/config.json
+automation/logs/

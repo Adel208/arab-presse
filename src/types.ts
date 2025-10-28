@@ -9,5 +9,7 @@ export interface NewsItem {
   keywords?: string;
   content?: string; // Contenu complet de l'article
   author?: string; // Auteur de l'article
+  image?: string; // URL ou chemin de l'image
+  imageAlt?: string; // Description de l'image pour l'accessibilité
 }
 
