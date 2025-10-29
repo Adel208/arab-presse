@@ -13,7 +13,7 @@ export default function Footer() {
     "url": window.location.origin,
     "logo": {
       "@type": "ImageObject",
-      "url": `${window.location.origin}/vite.svg`,
+      "url": `${window.location.origin}/logo.svg`,
       "width": 512,
       "height": 512
     },

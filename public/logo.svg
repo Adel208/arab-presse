@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Fond -->
+  <rect width="512" height="512" fill="#2563eb" rx="64"/>
+  
+  <!-- Cercle central avec onde (écho) -->
+  <circle cx="256" cy="256" r="120" fill="none" stroke="#ffffff" stroke-width="8" opacity="0.3"/>
+  <circle cx="256" cy="256" r="90" fill="none" stroke="#ffffff" stroke-width="8" opacity="0.5"/>
+  <circle cx="256" cy="256" r="60" fill="#ffffff" opacity="0.9"/>
+  
+  <!-- Lettre "ع" stylisée au centre -->
+  <text x="256" y="300" font-family="Arial, sans-serif" font-size="140" font-weight="bold" fill="#2563eb" text-anchor="middle">ع</text>
+  
+  <!-- Lignes d'onde (écho) -->
+  <path d="M 100 256 Q 256 200 412 256" fill="none" stroke="#ffffff" stroke-width="4" opacity="0.4"/>
+  <path d="M 100 256 Q 256 312 412 256" fill="none" stroke="#ffffff" stroke-width="4" opacity="0.4"/>
+</svg>
+

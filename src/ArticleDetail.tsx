@@ -26,7 +26,7 @@ export default function ArticleDetail() {
     ? `${window.location.origin}/img/gabesmanif.webp`
     : article?.id === 8
     ? `${window.location.origin}/img/marocmanif.webp`
-    : `${window.location.origin}/vite.svg`;
+    : `${window.location.origin}/logo.svg`;
   
   const articleUrl = window.location.href;
   const canonicalUrl = article ? `${window.location.origin}/article/${article.slug}` : articleUrl;
@@ -76,7 +76,7 @@ export default function ArticleDetail() {
       "name": "صدى العرب",
       "logo": {
         "@type": "ImageObject",
-        "url": `${window.location.origin}/vite.svg`,
+        "url": `${window.location.origin}/logo.svg`,
         "width": 512,
         "height": 512
       },

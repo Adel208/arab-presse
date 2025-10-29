@@ -76,7 +76,7 @@ export default function Home(): JSX.Element {
       "name": "صدى العرب",
       "logo": {
         "@type": "ImageObject",
-        "url": `${window.location.origin}/vite.svg`,
+        "url": `${window.location.origin}/logo.svg`,
         "width": 512,
         "height": 512
       },
