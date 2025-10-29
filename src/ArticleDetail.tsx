@@ -184,6 +184,15 @@ export default function ArticleDetail() {
                 loading="eager"
                 className="absolute inset-0 w-full h-full object-cover"
               />
+            ) : article.id === 4 ? (
+              <img 
+                src="/img/sudan-un-flags.webp" 
+                alt="أعلام الأمم المتحدة والسودان - تحذيرات أممية من كارثة إنسانية في الفاشر"
+                width="1200"
+                height="800"
+                loading="eager"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
             ) : null}
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40"></div>
             <div className="relative z-10 h-full flex items-center justify-center text-center px-8">
