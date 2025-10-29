@@ -9,12 +9,16 @@ export default function Footer() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "صدى العرب",
+    "alternateName": "Arab Press",
     "url": window.location.origin,
     "logo": {
       "@type": "ImageObject",
-      "url": `${window.location.origin}/vite.svg`
+      "url": `${window.location.origin}/vite.svg`,
+      "width": 512,
+      "height": 512
     },
-    "description": "مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية",
+    "description": "مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية، مع تغطية شاملة للأحداث السياسية والاقتصادية والثقافية والبيئية.",
+    "foundingDate": "2024",
     "inLanguage": "ar",
     "sameAs": [
       "https://www.facebook.com/arabpress",
@@ -22,12 +26,30 @@ export default function Footer() {
       "https://www.instagram.com/arabpress",
       "https://www.youtube.com/arabpress"
     ],
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "Customer Service",
-      "email": "contact@echode-larabe.com",
-      "availableLanguage": "Arabic"
-    }
+    "contactPoint": [
+      {
+        "@type": "ContactPoint",
+        "contactType": "Customer Service",
+        "email": "contact@echode-larabe.com",
+        "availableLanguage": ["Arabic"],
+        "areaServed": "TN"
+      },
+      {
+        "@type": "ContactPoint",
+        "contactType": "Editorial",
+        "availableLanguage": ["Arabic"]
+      }
+    ],
+    "publishingPrinciples": `${window.location.origin}/terms`,
+    "knowsAbout": [
+      "أخبار عربية",
+      "سياسة",
+      "اقتصاد",
+      "رياضة",
+      "تكنولوجيا",
+      "ثقافة",
+      "بيئة"
+    ]
   };
 
   return (

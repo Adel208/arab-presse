@@ -44,23 +44,32 @@ export default function ArticleDetail() {
 
   const contentSections = article.content ? article.content.split('##').filter(section => section.trim()) : [];
 
+  // Calculer le temps de lecture estimé (moyenne: 200 mots/minute pour l'arabe)
+  const estimatedReadingTime = article.content 
+    ? Math.max(1, Math.ceil((article.content.split(/\s+/).length) / 200))
+    : 1;
+
   // Données structurées JSON-LD pour SEO enrichies
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
     "headline": article.title,
     "description": article.metaDescription || article.summary,
-    "image": [imageUrl, {
-      "@type": "ImageObject",
-      "url": imageUrl,
-      "width": 1200,
-      "height": 800
-    }],
+    "image": [
+      {
+        "@type": "ImageObject",
+        "url": imageUrl,
+        "width": 1200,
+        "height": 800,
+        "caption": article.imageAlt || article.title
+      }
+    ],
     "datePublished": article.date,
     "dateModified": article.date,
     "author": {
       "@type": "Person",
-      "name": article.author || "هيئة التحرير"
+      "name": article.author || "هيئة التحرير",
+      "url": `${window.location.origin}/about`
     },
     "publisher": {
       "@type": "Organization",
@@ -70,17 +79,31 @@ export default function ArticleDetail() {
         "url": `${window.location.origin}/vite.svg`,
         "width": 512,
         "height": 512
-      }
+      },
+      "url": window.location.origin,
+      "sameAs": [
+        "https://www.facebook.com/arabpress",
+        "https://twitter.com/arabpress"
+      ]
     },
     "articleSection": article.category,
     "keywords": article.keywords || '',
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": canonicalUrl
+      "@id": canonicalUrl,
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": imageUrl
+      }
     },
     "inLanguage": "ar",
-    "wordCount": article.content ? article.content.length : 0,
-    "articleBody": article.content || article.summary
+    "wordCount": article.content ? article.content.split(/\s+/).length : 0,
+    "articleBody": article.content || article.summary,
+    "timeRequired": `PT${estimatedReadingTime}M`,
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": ["h1", "h2"]
+    }
   };
 
   return (

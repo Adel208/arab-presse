@@ -100,6 +100,32 @@ export default function Home(): JSX.Element {
     ? window.location.origin 
     : `${window.location.origin}/?category=${encodeURIComponent(selectedCategory)}`;
 
+  // Données structurées ItemList pour la liste des articles
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": selectedCategory === 'الكل' ? "أحدث الأخبار" : `أخبار ${selectedCategory}`,
+    "description": `قائمة المقالات ${selectedCategory === 'الكل' ? '' : `في فئة ${selectedCategory}`}`,
+    "numberOfItems": filteredNews.length,
+    "itemListElement": filteredNews.slice(0, 20).map((article, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "NewsArticle",
+        "headline": article.title,
+        "description": article.summary,
+        "url": `${window.location.origin}/article/${article.slug}`,
+        "image": article.image ? `${window.location.origin}${article.image}` : `${window.location.origin}${getArticleImage(article)}`,
+        "datePublished": article.date,
+        "author": {
+          "@type": "Person",
+          "name": article.author || "هيئة التحرير"
+        },
+        "articleSection": article.category
+      }
+    }))
+  };
+
   return (
     <div dir="rtl" lang="ar" className="bg-gradient-to-br from-gray-50 via-white to-gray-50 text-gray-900 font-arabic min-h-screen">
       <Helmet>
@@ -120,6 +146,9 @@ export default function Home(): JSX.Element {
         
         <script type="application/ld+json">
           {JSON.stringify(homeStructuredData)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(itemListSchema)}
         </script>
       </Helmet>
 

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { NewsItem } from '../types';
 
 interface RelatedArticlesProps {
@@ -32,11 +33,44 @@ export default function RelatedArticles({ currentArticle, allArticles, limit = 3
     return null;
   }
 
+  // Données structurées ItemList pour les articles liés
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "مقالات متعلقة",
+    "description": `مقالات متعلقة بـ: ${currentArticle.title}`,
+    "numberOfItems": relatedArticles.length,
+    "itemListElement": relatedArticles.map((article, index) => {
+      const item: any = {
+        "@type": "ListItem",
+        "position": index + 1,
+        "item": {
+          "@type": "NewsArticle",
+          "headline": article.title,
+          "url": `${window.location.origin}/article/${article.slug}`,
+          "datePublished": article.date
+        }
+      };
+      
+      if (article.image) {
+        item.item.image = `${window.location.origin}${article.image}`;
+      }
+      
+      return item;
+    })
+  };
+
   return (
-    <section className="mt-16 pt-12 border-t border-gray-200">
-      <h2 className="text-3xl font-extrabold text-gray-900 mb-8 flex items-center gap-3">
-        <span className="text-blue-600">مواضيع متعلقة</span>
-      </h2>
+    <>
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(itemListSchema)}
+        </script>
+      </Helmet>
+      <section className="mt-16 pt-12 border-t border-gray-200">
+        <h2 className="text-3xl font-extrabold text-gray-900 mb-8 flex items-center gap-3">
+          <span className="text-blue-600">مواضيع متعلقة</span>
+        </h2>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {relatedArticles.map((article) => (
@@ -83,6 +117,7 @@ export default function RelatedArticles({ currentArticle, allArticles, limit = 3
         ))}
       </div>
     </section>
+    </>
   );
 }
 
