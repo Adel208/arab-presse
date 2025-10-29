@@ -139,13 +139,36 @@ CRITÈRES ESSENTIELS:
 IMPORTANT: Réponds UNIQUEMENT avec le JSON, rien d'autre avant ou après. Le JSON doit être valide.`;
 
     try {
+      // Adapter max_tokens selon le modèle
+      let maxTokens = 8000; // Par défaut pour Sonnet/Opus
+      const { model } = this.config.anthropic;
+      const isHaiku = model.includes('haiku');
+      
+      if (isHaiku) {
+        maxTokens = 4096; // Limite pour Haiku
+      } else if (model.includes('sonnet') || model.includes('opus')) {
+        maxTokens = 8000; // Limite pour Sonnet/Opus
+      }
+      
+      // Adapter le prompt pour Haiku (articles plus courts)
+      let adaptedPrompt = prompt;
+      if (isHaiku) {
+        adaptedPrompt = prompt.replace(
+          /350 à 1000 mots/g,
+          '350 à 600 mots'
+        ).replace(
+          /800-1000 mots/g,
+          '500-600 mots'
+        );
+      }
+      
       const message = await this.anthropic.messages.create({
-        model: this.config.anthropic.model,
-        max_tokens: 8000,
+        model: model,
+        max_tokens: maxTokens,
         temperature: 0.7,
         messages: [{
           role: 'user',
-          content: prompt
+          content: adaptedPrompt
         }]
       });
 
@@ -159,14 +182,47 @@ IMPORTANT: Réponds UNIQUEMENT avec le JSON, rien d'autre avant ou après. Le JS
       
       // Extraire le JSON avec regex
       const jsonMatch = jsonText.match(/\{[\s\S]*\}/);
-  
+      
 
 
       if (jsonMatch) {
         jsonText = jsonMatch[0];
       }
 
-      const articleData = JSON.parse(jsonText);
+      // Nettoyer les caractères de contrôle problématiques dans les chaînes JSON
+      // Échapper correctement les retours à la ligne dans les valeurs de chaînes
+      jsonText = jsonText.replace(/"([^"]*)":\s*"([^"]*(?:\\.[^"]*)*)"/g, (match, key, value) => {
+        // Échapper les retours à la ligne et autres caractères de contrôle dans la valeur
+        const escapedValue = value
+          .replace(/\n/g, '\\n')
+          .replace(/\r/g, '\\r')
+          .replace(/\t/g, '\\t')
+          .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '');
+        return `"${key}": "${escapedValue}"`;
+      });
+
+      let articleData;
+      try {
+        articleData = JSON.parse(jsonText);
+      } catch (parseError) {
+        // Si le parsing échoue, essayer avec une méthode plus agressive
+        await this.log(`⚠️  Erreur de parsing JSON, tentative de correction avancée...`);
+        
+        // Méthode alternative: remplacer tous les caractères de contrôle par des espaces
+        jsonText = jsonText.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, ' ');
+        // Échapper les retours à la ligne non échappés dans les chaînes
+        jsonText = jsonText.replace(/([^\\])\n/g, '$1\\n');
+        jsonText = jsonText.replace(/([^\\])\r/g, '$1\\r');
+        
+        try {
+          articleData = JSON.parse(jsonText);
+        } catch (secondError) {
+          // Dernière tentative: utiliser une bibliothèque de réparation JSON si disponible
+          // Pour l'instant, on log et on échoue
+          await this.log(`✗ JSON invalide reçu de Claude. Position erreur: ${parseError.message}`);
+          throw new Error(`Impossible de parser la réponse JSON après tentatives de correction: ${parseError.message}`);
+        }
+      }
 
       // Validation des champs requis
       const requiredFields = ['title', 'summary', 'category', 'content'];

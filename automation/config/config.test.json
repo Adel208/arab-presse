@@ -1,0 +1,49 @@
+{
+  "anthropic": {
+    "apiKey": "USE_FROM_CONFIG_JSON",
+    "model": "claude-3-haiku-20240307"
+  },
+  "social": {
+    "twitter": {
+      "enabled": false,
+      "apiKey": "",
+      "apiSecret": "",
+      "accessToken": "",
+      "accessTokenSecret": ""
+    },
+    "facebook": {
+      "enabled": false,
+      "pageId": "",
+      "accessToken": ""
+    },
+    "linkedin": {
+      "enabled": false,
+      "accessToken": ""
+    }
+  },
+  "newsSources": [
+    {
+      "name": "BBC Arabic",
+      "url": "https://feeds.bbci.co.uk/arabic/rss.xml",
+      "type": "rss"
+    },
+    {
+      "name": "France 24 Arabic",
+      "url": "https://www.france24.com/ar/rss",
+      "type": "rss"
+    }
+  ],
+  "automation": {
+    "dailyLimit": 1,
+    "minInterval": 8,
+    "categories": ["سياسة", "اقتصاد", "رياضة", "تكنولوجيا", "ثقافة", "بيئة"],
+    "language": "ar",
+    "seoOptimization": true,
+    "imageGeneration": false
+  },
+  "site": {
+    "baseUrl": "https://arabpress.netlify.app",
+    "dataPath": "src/data.ts"
+  }
+}
+

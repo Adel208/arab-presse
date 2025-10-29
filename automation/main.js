@@ -17,8 +17,8 @@ const SocialPublisher = require('./modules/social-publisher');
 const ImageFetcher = require('./modules/image-fetcher');
 
 class AutomationOrchestrator {
-  constructor() {
-    this.configPath = path.join(__dirname, 'config/config.json');
+  constructor(configPath = null) {
+    this.configPath = configPath || path.join(__dirname, 'config/config.json');
     this.logFile = path.join(__dirname, 'logs/main.log');
   }
 
@@ -42,8 +42,19 @@ class AutomationOrchestrator {
    */
   async loadConfig() {
     try {
-      const configData = await fs.readFile(this.configPath, 'utf-8');
-      return JSON.parse(configData);
+      await this.log(`Chargement de la configuration: ${this.configPath}`);
+      let configData = await fs.readFile(this.configPath, 'utf-8');
+      let config = JSON.parse(configData);
+      
+      // Si mode test et apiKey = "USE_FROM_CONFIG_JSON", utiliser celle de config.json
+      if (config.anthropic?.apiKey === "USE_FROM_CONFIG_JSON") {
+        const defaultConfigPath = path.join(__dirname, 'config/config.json');
+        const defaultConfigData = await fs.readFile(defaultConfigPath, 'utf-8');
+        const defaultConfig = JSON.parse(defaultConfigData);
+        config.anthropic.apiKey = defaultConfig.anthropic.apiKey;
+      }
+      
+      return config;
     } catch (error) {
       throw new Error(`Impossible de charger la configuration: ${error.message}`);
     }
@@ -314,6 +325,14 @@ Généré automatiquement par le système d'automatisation`;
 if (require.main === module) {
   const args = process.argv.slice(2);
 
+  // Détection du mode test
+  let configPath = null;
+  if (args.includes('--test-mode')) {
+    configPath = path.join(__dirname, 'config/config.test.json');
+    console.log('🧪 MODE TEST ACTIVÉ - Utilisation de config.test.json (Claude Haiku)');
+    console.log('💰 Coût estimé: ~$0.02-0.05 par article\n');
+  }
+
   const options = {
     skipScraping: args.includes('--skip-scraping'),
     skipGeneration: args.includes('--skip-generation'),
@@ -329,6 +348,7 @@ if (require.main === module) {
 Usage: node automation/main.js [options]
 
 Options:
+  --test-mode          Mode test économique (utilise Claude Haiku + 1 article)
   --skip-scraping      Ignore la veille automatique
   --skip-generation    Ignore la génération d'articles
   --skip-publication   Ignore la publication sur le site
@@ -339,15 +359,22 @@ Options:
   --help               Affiche cette aide
 
 Exemples:
-  node automation/main.js                    # Exécution complète
-  node automation/main.js --dry-run          # Test sans modifications
+  node automation/main.js                    # Exécution complète (Sonnet, 3 articles)
+  node automation/main.js --test-mode        # Mode test (Haiku, 1 article) - ~$0.02
+  node automation/main.js --test-mode --dry-run  # Test sans modifications
   node automation/main.js --skip-social      # Sans partage social
   node automation/main.js --skip-git         # Sans commit Git
+
+💡 Mode Test:
+   - Modèle: Claude Haiku (10x moins cher)
+   - Articles: 1 seul article
+   - Coût: ~$0.02-0.05 par test
+   - Parfait pour tester sans dépenser trop
 `);
     process.exit(0);
   }
 
-  const orchestrator = new AutomationOrchestrator();
+  const orchestrator = new AutomationOrchestrator(configPath);
   orchestrator.run(options).catch(error => {
     console.error('Échec du processus d\'automatisation');
     process.exit(1);
