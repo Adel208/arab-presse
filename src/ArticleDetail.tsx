@@ -193,6 +193,15 @@ export default function ArticleDetail() {
                 loading="eager"
                 className="absolute inset-0 w-full h-full object-cover"
               />
+            ) : article.id === 9 ? (
+              <img 
+                src="/img/ben-barka.webp" 
+                alt="صورة أرشيفية للمعارض المغربي المهدي بن بركة الذي اختفى في باريس عام 1965"
+                width="1200"
+                height="800"
+                loading="eager"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
             ) : null}
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40"></div>
             <div className="relative z-10 h-full flex items-center justify-center text-center px-8">
