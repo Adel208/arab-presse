@@ -1,10 +1,43 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  
+  // Données structurées Schema.org Organization pour le Footer
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "صدى العرب",
+    "url": window.location.origin,
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${window.location.origin}/vite.svg`
+    },
+    "description": "مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية",
+    "inLanguage": "ar",
+    "sameAs": [
+      "https://www.facebook.com/arabpress",
+      "https://twitter.com/arabpress",
+      "https://www.instagram.com/arabpress",
+      "https://www.youtube.com/arabpress"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "Customer Service",
+      "email": "contact@echode-larabe.com",
+      "availableLanguage": "Arabic"
+    }
+  };
 
   return (
-    <footer className="bg-gray-900 text-gray-300 mt-20">
+    <>
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(organizationSchema)}
+        </script>
+      </Helmet>
+      <footer className="bg-gray-900 text-gray-300 mt-20">
       <div className="max-w-7xl mx-auto px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* À propos */}
@@ -89,6 +122,7 @@ export default function Footer() {
         </div>
       </div>
     </footer>
+    </>
   );
 }
 

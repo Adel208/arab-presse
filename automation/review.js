@@ -77,7 +77,6 @@ class ArticleReviewer {
       issues.push('⚠️  Résumé trop court');
     }
 
- mana
     if (!article.metaDescription || article.metaDescription.length < 100) {
       warnings.push('⚠️  Meta description pourrait être plus longue');
     }
@@ -184,7 +183,9 @@ class ArticleReviewer {
       await fs.writeFile(outputFile, JSON.stringify(approvedArticles, null, 2), 'utf-8');
       console.log(`\n✅ Articles approuvés sauvegardés dans: ${outputFile}`);
       console.log('\n💡 Vous pouvez maintenant publier avec:');
-      console.log('   node goldfish-publisher.js');
+      console.log('   node automation/publish-approved.js');
+      console.log('   node automation/publish-approved.js --build  (avec build du site)');
+      console.log('   node automation/publish-approved.js --build --git  (avec build + commit Git)');
     }
 
     if (rejectedArticles.length > 0) {

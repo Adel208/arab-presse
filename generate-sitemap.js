@@ -45,15 +45,19 @@ function generateSitemap() {
   // Ajouter les articles
   articles.forEach(article => {
     const articleDate = article.date.split('T')[0];
-    const hasImage = article.id === 7 || article.id === 8;
+    const hasImage = article.id === 7 || article.id === 8 || article.id === 12 || article.id === 13;
     const imageUrl = article.id === 7 
       ? `${DOMAIN}/img/gabesmanif.webp`
       : article.id === 8
       ? `${DOMAIN}/img/marocmanif.webp`
+      : article.id === 12
+      ? `${DOMAIN}/img/darf handmade.jpg`
+      : article.id === 13
+      ? `${DOMAIN}/img/tunispolic.jpg`
       : null;
 
     xml += `  <url>
-    <loc>${DOMAIN}/article/${article.id}</loc>
+    <loc>${DOMAIN}/article/${article.slug}</loc>
     <lastmod>${articleDate}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -98,6 +102,25 @@ function generateSitemap() {
     <loc>${DOMAIN}/?category=${encodeURIComponent(category)}</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
+  </url>
+  
+`;
+  });
+
+  // Ajouter les pages légales
+  const legalPages = [
+    { path: '/about', priority: '0.7', changefreq: 'monthly' },
+    { path: '/contact', priority: '0.7', changefreq: 'monthly' },
+    { path: '/privacy', priority: '0.8', changefreq: 'monthly' },
+    { path: '/terms', priority: '0.8', changefreq: 'monthly' }
+  ];
+
+  legalPages.forEach(page => {
+    xml += `  <url>
+    <loc>${DOMAIN}${page.path}</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>${page.changefreq}</changefreq>
+    <priority>${page.priority}</priority>
   </url>
   
 `;

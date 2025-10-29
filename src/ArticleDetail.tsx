@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { newsData } from './data';
 import AdBanner from './components/AdBanner';
 import RelatedArticles from './components/RelatedArticles';
+import Breadcrumb from './components/Breadcrumb';
 import { trackPageView, trackSocialShare } from './utils/analytics';
 import { adsConfig } from './config/ads';
 
@@ -43,13 +44,18 @@ export default function ArticleDetail() {
 
   const contentSections = article.content ? article.content.split('##').filter(section => section.trim()) : [];
 
-  // Données structurées JSON-LD pour SEO
+  // Données structurées JSON-LD pour SEO enrichies
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
     "headline": article.title,
     "description": article.metaDescription || article.summary,
-    "image": [imageUrl],
+    "image": [imageUrl, {
+      "@type": "ImageObject",
+      "url": imageUrl,
+      "width": 1200,
+      "height": 800
+    }],
     "datePublished": article.date,
     "dateModified": article.date,
     "author": {
@@ -61,7 +67,9 @@ export default function ArticleDetail() {
       "name": "صدى العرب",
       "logo": {
         "@type": "ImageObject",
-        "url": `${window.location.origin}/vite.svg`
+        "url": `${window.location.origin}/vite.svg`,
+        "width": 512,
+        "height": 512
       }
     },
     "articleSection": article.category,
@@ -70,7 +78,9 @@ export default function ArticleDetail() {
       "@type": "WebPage",
       "@id": canonicalUrl
     },
-    "inLanguage": "ar"
+    "inLanguage": "ar",
+    "wordCount": article.content ? article.content.length : 0,
+    "articleBody": article.content || article.summary
   };
 
   return (
@@ -114,6 +124,15 @@ export default function ArticleDetail() {
       </Helmet>
 
       <main className="max-w-4xl mx-auto px-6 py-8">
+        {/* Breadcrumbs */}
+        <Breadcrumb 
+          items={[
+            { label: 'الرئيسية', url: '/' },
+            { label: article.category, url: `/?category=${encodeURIComponent(article.category)}` },
+            { label: article.title, url: `/article/${article.slug}` }
+          ]}
+        />
+
         {/* Bannière publicitaire en haut de l'article */}
         <AdBanner slotId={adsConfig.slots.headerBanner} style={{ width: '100%', height: '90px', marginBottom: '2rem' }} format="horizontal" />
         

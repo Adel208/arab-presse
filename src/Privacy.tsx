@@ -47,13 +47,85 @@ export default function Privacy() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">3. إعلانات Google</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">3. إعلانات Google AdSense</h2>
               <p>
-                يستخدم موقعنا Google AdSense لعرض الإعلانات. قد تستخدم Google معلومات حول زياراتك للموقع لعرض إعلانات مخصصة.
+                يستخدم موقعنا خدمة <strong>Google AdSense</strong> لعرض الإعلانات. هذا يعني أن شركة Google وأطرافها الثالثة تستخدم ملفات تعريف الارتباط (Cookies) لجمع معلومات حول زياراتك لموقعنا ومواقع أخرى على الإنترنت.
               </p>
-              <p className="mt-4">
-                يمكنك التحكم في الإعلانات المعروضة من خلال صفحة إعدادات الإعلانات في Google.
+              
+              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">ما هي ملفات تعريف الارتباط (Cookies) للإعلانات؟</h3>
+              <p>
+                ملفات تعريف الارتباط الخاصة بالإعلانات (Advertising Cookies) هي ملفات صغيرة تخزنها Google على جهازك عند زيارتك لموقعنا. هذه الملفات تساعد على:
               </p>
+              <ul className="list-disc list-inside space-y-2 mt-3">
+                <li>تذكر زياراتك لموقعنا ومواقع أخرى</li>
+                <li>تجمع معلومات حول اهتماماتك وتفضيلاتك</li>
+                <li>تعرض لك إعلانات أكثر صلة بمحتوى تبحث عنه أو تهتم به</li>
+                <li>تقيس فعالية الإعلانات</li>
+              </ul>
+
+              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">الشركاء الإعلانيون</h3>
+              <p>
+                يعمل Google AdSense مع شبكة واسعة من المعلنين وشركاء الإعلان. قد يتم جمع معلوماتك وتستخدم من قبل:
+              </p>
+              <ul className="list-disc list-inside space-y-2 mt-3">
+                <li>Google LLC وشركاتها التابعة</li>
+                <li>الشركاء المعتمدون من Google AdSense</li>
+                <li>شبكات الإعلان التابعة لجهات خارجية</li>
+              </ul>
+
+              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Remarketing</h3>
+              <p>
+                قد يستخدم موقعنا تقنية Remarketing (إعادة استهداف) التي تسمح لـ Google بإظهار إعلانات لموقعنا على المواقع الأخرى التي تزورها عبر الإنترنت. يتم ذلك باستخدام ملفات تعريف الارتباط الخاصة بـ Google.
+              </p>
+
+              <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">كيف يمكنك التحكم في الإعلانات؟</h3>
+              <p className="mb-3">
+                يمكنك التحكم في الإعلانات التي تراها وملفات تعريف الارتباط المستخدمة من خلال:
+              </p>
+              <ul className="list-disc list-inside space-y-2 mb-4">
+                <li>
+                  <strong>إعدادات الإعلانات في Google:</strong>{' '}
+                  <a 
+                    href="https://www.google.com/settings/ads" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-700 underline"
+                  >
+                    اضغط هنا للوصول إلى إعدادات الإعلانات
+                  </a>
+                </li>
+                <li>
+                  <strong>Opt-out من Google AdSense:</strong>{' '}
+                  <a 
+                    href="https://www.google.com/ads/preferences" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-700 underline"
+                  >
+                    اضغط هنا لإلغاء الاشتراك
+                  </a>
+                </li>
+                <li>
+                  <strong>حذف ملفات تعريف الارتباط:</strong> يمكنك حذف ملفات تعريف الارتباط من إعدادات المتصفح في أي وقت
+                </li>
+                <li>
+                  <strong>Network Advertising Initiative:</strong>{' '}
+                  <a 
+                    href="http://www.networkadvertising.org/choices/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-700 underline"
+                  >
+                    www.networkadvertising.org/choices/
+                  </a>
+                </li>
+              </ul>
+
+              <div className="bg-yellow-50 border-r-4 border-yellow-500 p-4 rounded-lg mt-4">
+                <p className="text-sm text-yellow-900">
+                  <strong>ملاحظة مهمة:</strong> حتى إذا قمت بإلغاء الاشتراك من الإعلانات المخصصة، ستظل ترى إعلانات على موقعنا، لكنها لن تكون مخصصة بناءً على اهتماماتك.
+                </p>
+              </div>
             </section>
 
             <section>

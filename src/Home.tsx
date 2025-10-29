@@ -23,11 +23,18 @@ export default function Home(): JSX.Element {
     trackPageView(window.location.pathname, 'Home');
   }, [searchParams]);
 
-  const filteredNews = newsData.filter((item) =>
-    selectedCategory === 'الكل' || item.category === selectedCategory
-  );
+  const filteredNews = newsData
+    .filter((item) =>
+      selectedCategory === 'الكل' || item.category === selectedCategory
+    )
+    .sort((a, b) => {
+      // Trier par date décroissante (plus récent en premier)
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return dateB.getTime() - dateA.getTime();
+    });
 
-  // Données structurées pour la page d'accueil
+  // Données structurées pour la page d'accueil enrichies
   const homeStructuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -40,8 +47,23 @@ export default function Home(): JSX.Element {
       "name": "صدى العرب",
       "logo": {
         "@type": "ImageObject",
-        "url": `${window.location.origin}/vite.svg`
-      }
+        "url": `${window.location.origin}/vite.svg`,
+        "width": 512,
+        "height": 512
+      },
+      "url": window.location.origin,
+      "sameAs": [
+        "https://www.facebook.com/arabpress",
+        "https://twitter.com/arabpress"
+      ]
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": `${window.location.origin}/?search={search_term_string}`
+      },
+      "query-input": "required name=search_term_string"
     }
   };
 
