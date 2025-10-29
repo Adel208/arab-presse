@@ -21,9 +21,9 @@
         <news:name>صدى العرب</news:name>
         <news:language>ar</news:language>
       </news:publication>
-      <news:publication_date>2025-10-28</news:publication_date>
-      <news:title>تونس تعلق نشاط المنتدى التونسي للحقوق الاقتصادية والاجتماعية وسط مخاوف من تضييق على المجتمع المدني</news:title>
-      <news:keywords>تونس, المنتدى التونسي للحقوق الاقتصادية والاجتماعية, المجتمع المدني, حقوق الإنسان, التمويل الأجنبي</news:keywords>
+      <news:publication_date>2025-01-15</news:publication_date>
+      <news:title>قابس تختنق: مدينة الموت البطيء بين وعود السلطة وصمود الأهالي</news:title>
+      <news:keywords>قابس، تونس، التلوث الصناعي، الفوسفوجبسوم، المجمع الكيميائي التونسي، الاحتجاجات في تونس، قيس سعيّد، العدالة البيئية، إضراب عام، البيئة في تونس</news:keywords>
     </news:news>
   </url>
   
@@ -73,26 +73,6 @@
       <news:title>مستقبل دارفور بعد سيطرة الدعم السريع على الفاشر: تحولات استراتيجية وأزمة إنسانية متفاقمة</news:title>
       <news:keywords>دارفور, الفاشر, الدعم السريع, السودان, الحرب السودانية, أزمة إنسانية, نزوح, الجيش السوداني</news:keywords>
     </news:news>
-  </url>
-  
-  <url>
-    <loc>https://arabpress.netlify.app/article/twns-talq-nshat-almntda-altwnsy-llhqwq-alaqtsadya-walajtmaay</loc>
-    <lastmod>2025-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    <news:news>
-      <news:publication>
-        <news:name>صدى العرب</news:name>
-        <news:language>ar</news:language>
-      </news:publication>
-      <news:publication_date>2025-10-28</news:publication_date>
-      <news:title>تونس تعلق نشاط المنتدى التونسي للحقوق الاقتصادية والاجتماعية وسط تصاعد المخاوف من تضييق الحريات</news:title>
-      <news:keywords>تونس, المجتمع المدني, الحقوق الاقتصادية والاجتماعية, التمويل الأجنبي, الحريات, قيس سعيد</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://arabpress.netlify.app/img/gabesmanif.webp</image:loc>
-      <image:title>تونس تعلق نشاط المنتدى التونسي للحقوق الاقتصادية والاجتماعية وسط تصاعد المخاوف من تضييق الحريات</image:title>
-    </image:image>
   </url>
   
   <url>
