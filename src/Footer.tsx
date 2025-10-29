@@ -19,7 +19,6 @@ export default function Footer() {
     },
     "description": "مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية، مع تغطية شاملة للأحداث السياسية والاقتصادية والثقافية والبيئية.",
     "foundingDate": "2024",
-    "inLanguage": "ar",
     "sameAs": [
       "https://www.facebook.com/arabpress",
       "https://twitter.com/arabpress",
