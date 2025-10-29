@@ -40,7 +40,6 @@ function generateSitemap() {
   
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   
   <!-- Page d'accueil -->
@@ -85,35 +84,6 @@ function generateSitemap() {
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
 `;
-
-    // Ajouter les métadonnées news pour les articles récents (derniers 2 jours)
-    // Google News Sitemap requiert que les articles soient publiés dans les 2 derniers jours
-    // ET que la date ne soit PAS dans le futur
-    const twoDaysAgo = new Date(today);
-    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
-    twoDaysAgo.setHours(0, 0, 0, 0);
-    
-    const normalizedArticleDate = new Date(articleDate);
-    normalizedArticleDate.setHours(0, 0, 0, 0);
-    
-    // Vérifier que la date est valide, pas dans le futur, et dans les 2 derniers jours
-    const isValidForNews = normalizedArticleDate >= twoDaysAgo && 
-                          normalizedArticleDate <= today &&
-                          !isNaN(articleDateObj.getTime()) &&
-                          articleDateObj <= today;
-    
-    if (isValidForNews) {
-      xml += `    <news:news>
-      <news:publication>
-        <news:name>صدى العرب</news:name>
-        <news:language>ar</news:language>
-      </news:publication>
-      <news:publication_date>${articleDate}</news:publication_date>
-      <news:title>${escapeXml(article.title)}</news:title>
-      ${article.keywords ? `<news:keywords>${escapeXml(article.keywords)}</news:keywords>` : ''}
-    </news:news>
-`;
-    }
 
     // Ajouter l'image si disponible
     if (hasImage && imageUrl) {
