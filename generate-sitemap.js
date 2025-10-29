@@ -104,6 +104,7 @@ function generateSitemap() {
   categories.forEach(category => {
     xml += `  <url>
     <loc>${DOMAIN}/?category=${encodeURIComponent(category)}</loc>
+    <lastmod>${currentDate}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
