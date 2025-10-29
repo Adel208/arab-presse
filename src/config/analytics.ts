@@ -4,8 +4,8 @@
  */
 
 export const analyticsConfig = {
-  // Google Analytics Measurement ID (à remplacer)
-  measurementId: 'G-XXXXXXXXXX',
+  // Google Analytics Measurement ID
+  measurementId: 'G-1MVBT8GE8C',
   
   // Activer/désactiver Analytics
   enabled: true,
