@@ -1,10 +1,15 @@
-# Fichiers statiques - ne pas rediriger
-/sitemap.xml  /sitemap.xml  200
-/robots.txt   /robots.txt   200
+# Fichiers statiques - servir directement AVANT la redirection SPA
+# Le flag ! force Netlify à servir le fichier directement sans redirection
+/sitemap.xml  /sitemap.xml  200!
+/robots.txt   /robots.txt   200!
+
+# Assets statiques
+/assets/*     /assets/:splat
+/img/*        /img/:splat
 
 # Articles - redirection SPA
 /article/*    /article/:splat  200
 
-# Toutes les autres routes vers l'app React
+# Toutes les autres routes vers l'app React (DOIT être en dernier)
 /*            /index.html  200
 

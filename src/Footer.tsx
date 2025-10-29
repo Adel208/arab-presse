@@ -62,7 +62,7 @@ export default function Footer() {
               <li><Link to="/?category=رياضة" className="hover:text-primary-400 transition-colors duration-300 font-medium">رياضة</Link></li>
               <li><Link to="/?category=تكنولوجيا" className="hover:text-primary-400 transition-colors duration-300 font-medium">تكنولوجيا</Link></li>
               <li><Link to="/?category=ثقافة" className="hover:text-primary-400 transition-colors duration-300 font-medium">ثقافة</Link></li>
-              <li><Link to="/?category=بيئة" className="hover:text-primary-400 transition-colors duration-300 font-medium">بيئة</Link></li>
+              
             </ul>
           </div>
 

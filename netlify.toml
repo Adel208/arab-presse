@@ -14,31 +14,9 @@
   [headers.values]
     Content-Type = "text/plain; charset=utf-8"
 
-# Exclusion des fichiers statiques (sitemap, robots, etc.)
-[[redirects]]
-  from = "/sitemap.xml"
-  to = "/sitemap.xml"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/robots.txt"
-  to = "/robots.txt"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/article/*"
-  to = "/article/:splat"
-  status = 200
-  force = false
-
-# Redirection SPA - doit être en dernier
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  force = false
+# IMPORTANT: Les fichiers statiques (sitemap.xml, robots.txt) sont servis automatiquement
+# par Netlify s'ils existent dans le dossier publié. Le fichier _redirects gère
+# la priorité avec le flag ! pour forcer le service direct des fichiers statiques.
 
 [build.environment]
   NODE_VERSION = "18"
