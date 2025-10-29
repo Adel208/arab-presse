@@ -55,9 +55,8 @@ export default function AdBanner({
   }
 
   return (
-    <div className="my-6 flex justify-center" style={style}>
+    <div className="my-6 flex justify-center" style={style} ref={adRef}>
       <ins
-        ref={adRef}
         className="adsbygoogle"
         style={{
           display: 'block',

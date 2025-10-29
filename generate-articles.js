@@ -26,8 +26,8 @@ for (let i = 0; i < lines.length; i++) {
     continue;
   }
   
-  // Détecter la fin d'un article
-  if (inArticle && line.trim() === '},') {
+  // Détecter la fin d'un article (avec ou sans virgule, car le dernier n'a pas de virgule)
+  if (inArticle && (line.trim() === '},' || line.trim() === '}')) {
     if (currentArticle.id && currentArticle.slug) {
       articles.push(currentArticle);
     }

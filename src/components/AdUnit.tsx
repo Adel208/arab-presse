@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { adsConfig } from '../config/ads';
 
 interface AdUnitProps {
@@ -12,7 +12,6 @@ interface AdUnitProps {
  */
 export default function AdUnit({ position, className = '' }: AdUnitProps) {
   const adRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     // Désactiver temporairement si AdSense n'est pas configuré
