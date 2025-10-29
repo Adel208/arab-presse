@@ -72,7 +72,7 @@ export default function Home(): JSX.Element {
     : `${window.location.origin}/?category=${encodeURIComponent(selectedCategory)}`;
 
   return (
-    <div dir="rtl" lang="ar" className="bg-gray-50 text-gray-900 font-sans">
+    <div dir="rtl" lang="ar" className="bg-gradient-to-br from-gray-50 via-white to-gray-50 text-gray-900 font-arabic min-h-screen">
       <Helmet>
         <title>صدى العرب - مصدرك الموثوق للأخبار العاجلة</title>
         <meta name="description" content="مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية، مع تغطية شاملة للأحداث السياسية والاقتصادية والثقافية والبيئية." />
@@ -100,8 +100,8 @@ export default function Home(): JSX.Element {
         
         {/* Hero Section - Breaking News */}
         {selectedCategory === 'الكل' && (
-          <section className="mb-16">
-            <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-8 md:p-12 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col lg:flex-row items-center gap-10 border border-red-100">
+          <section className="mb-16 animate-scaleIn">
+            <div className="bg-gradient-to-br from-red-50 via-orange-50 to-amber-50 rounded-3xl p-8 md:p-12 shadow-large hover:shadow-2xl transition-all duration-500 flex flex-col lg:flex-row items-center gap-10 border border-red-200/50 backdrop-blur-sm">
               <div className="flex-1 text-center lg:text-right">
                 <span className="inline-block px-4 py-2 bg-red-600 text-white text-sm font-bold rounded-full mb-6 tracking-wider">بيئة</span>
                 <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 leading-tight">قابس تختنق: مدينة الموت البطيء بين وعود السلطة وصمود الأهالي</h2>
@@ -140,7 +140,7 @@ export default function Home(): JSX.Element {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredNews.map((item) => (
-                <article key={item.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-2xl hover:-translate-y-3 transition-all duration-300 group border border-gray-100">
+                <article key={item.id} className="bg-white rounded-2xl shadow-soft overflow-hidden card-hover group border border-gray-100/50 backdrop-blur-sm animate-slideUp">
 {item.image ? (
                     <div className="relative w-full h-56 overflow-hidden">
                       <img
@@ -229,15 +229,15 @@ export default function Home(): JSX.Element {
                     <div className="bg-gray-200 border-2 border-dashed rounded-t-xl w-full h-56 group-hover:opacity-90 transition-opacity duration-300"></div>
                   )}
                   <div className="p-6 space-y-4">
-                    <div className="flex items-center justify-between text-sm text-gray-500 font-medium">
-                      <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold tracking-wider">{item.category}</span>
-                      <time dateTime={item.date}>{item.date}</time>
+                    <div className="flex items-center justify-between text-sm text-gray-500 font-medium mb-3">
+                      <span className="px-4 py-1.5 bg-gradient-to-r from-primary-100 to-primary-50 text-primary-700 rounded-full text-xs font-black tracking-wider shadow-sm border border-primary-200/50">{item.category}</span>
+                      <time dateTime={item.date} className="text-gray-600 font-semibold">{item.date}</time>
                     </div>
-                    <h3 className="text-xl font-extrabold text-gray-900 group-hover:text-blue-600 transition-colors duration-200 overflow-hidden text-ellipsis whitespace-nowrap">{item.title}</h3>
+                    <h3 className="text-xl font-black text-gray-900 group-hover:text-primary-600 transition-colors duration-300 overflow-hidden text-ellipsis whitespace-nowrap leading-tight mb-3">{item.title}</h3>
                     <p className="text-gray-600 leading-relaxed overflow-hidden" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>{item.summary}</p>
-                    <Link to={`/article/${item.slug}`} className="inline-flex items-center gap-2 text-blue-600 font-bold hover:text-blue-700 transition-colors duration-200 group-hover:gap-3">
+                    <Link to={`/article/${item.slug}`} className="inline-flex items-center gap-2 text-primary-600 font-black hover:text-primary-700 transition-all duration-300 group-hover:gap-3 mt-4">
                       اقرأ المزيد
-                      <span className="transform transition-transform duration-200 group-hover:translate-x-2">→</span>
+                      <span className="transform transition-transform duration-300 group-hover:translate-x-2">→</span>
                     </Link>
                   </div>
                 </article>
