@@ -209,7 +209,7 @@ export default function Home(): JSX.Element {
                         width="400"
                         height="300"
                         loading="lazy"
-                        className="w-full h-full object-cover group-hover:scale-头脑transition-transform duration-300"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                     </div>
