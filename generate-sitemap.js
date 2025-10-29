@@ -35,7 +35,8 @@ function escapeXml(unsafe) {
 }
 
 function generateSitemap() {
-  const currentDate = new Date().toISOString().split('T')[0];
+  const today = new Date();
+  const currentDate = today.toISOString().split('T')[0];
   
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -54,35 +55,54 @@ function generateSitemap() {
 
   // Ajouter les articles
   articles.forEach(article => {
-    const articleDate = article.date.split('T')[0];
+    // Extraire la date et s'assurer qu'elle n'est pas dans le futur
+    let articleDate = article.date.split('T')[0];
+    const articleDateObj = new Date(article.date);
+    
+    // Si la date est dans le futur, utiliser la date d'aujourd'hui
+    if (articleDateObj > today) {
+      articleDate = currentDate;
+      console.warn(`⚠️  Date future corrigée pour l'article ${article.id} (${article.slug}): ${article.date} → ${currentDate}`);
+    }
+    
+    // Assurer que lastmod n'est jamais dans le futur
+    const lastmod = articleDate <= currentDate ? articleDate : currentDate;
+    
     const hasImage = article.id === 7 || article.id === 8 || article.id === 12 || article.id === 13;
     const imageUrl = article.id === 7 
       ? `${DOMAIN}/img/gabesmanif.webp`
       : article.id === 8
       ? `${DOMAIN}/img/marocmanif.webp`
       : article.id === 12
-      ? `${DOMAIN}/img/darf handmade.jpg`
+      ? `${DOMAIN}/img/darfoure.jpg`
       : article.id === 13
       ? `${DOMAIN}/img/tunispolic.jpg`
       : null;
 
     xml += `  <url>
     <loc>${DOMAIN}/article/${article.slug}</loc>
-    <lastmod>${articleDate}</lastmod>
+    <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
 `;
 
     // Ajouter les métadonnées news pour les articles récents (derniers 2 jours)
     // Google News Sitemap requiert que les articles soient publiés dans les 2 derniers jours
-    const articleDateObj = new Date(article.date);
-    const today = new Date();
-    today.setHours(23, 59, 59, 999); // Fin de journée aujourd'hui
+    // ET que la date ne soit PAS dans le futur
     const twoDaysAgo = new Date(today);
     twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+    twoDaysAgo.setHours(0, 0, 0, 0);
     
-    // Vérifier que la date n'est pas dans le futur ET qu'elle est dans les 2 derniers jours
-    if (articleDateObj >= twoDaysAgo && articleDateObj <= today) {
+    const normalizedArticleDate = new Date(articleDate);
+    normalizedArticleDate.setHours(0, 0, 0, 0);
+    
+    // Vérifier que la date est valide, pas dans le futur, et dans les 2 derniers jours
+    const isValidForNews = normalizedArticleDate >= twoDaysAgo && 
+                          normalizedArticleDate <= today &&
+                          !isNaN(articleDateObj.getTime()) &&
+                          articleDateObj <= today;
+    
+    if (isValidForNews) {
       xml += `    <news:news>
       <news:publication>
         <news:name>صدى العرب</news:name>
