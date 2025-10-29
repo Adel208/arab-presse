@@ -24,6 +24,16 @@ while ((match = articlePattern.exec(dataContent)) !== null) {
 // Remplacez par votre domaine réel
 const DOMAIN = 'https://arabpress.netlify.app';
 
+// Fonction pour échapper les caractères XML
+function escapeXml(unsafe) {
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
 function generateSitemap() {
   const currentDate = new Date().toISOString().split('T')[0];
   
@@ -64,19 +74,23 @@ function generateSitemap() {
 `;
 
     // Ajouter les métadonnées news pour les articles récents (derniers 2 jours)
+    // Google News Sitemap requiert que les articles soient publiés dans les 2 derniers jours
     const articleDateObj = new Date(article.date);
-    const twoDaysAgo = new Date();
+    const today = new Date();
+    today.setHours(23, 59, 59, 999); // Fin de journée aujourd'hui
+    const twoDaysAgo = new Date(today);
     twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
     
-    if (articleDateObj >= twoDaysAgo) {
+    // Vérifier que la date n'est pas dans le futur ET qu'elle est dans les 2 derniers jours
+    if (articleDateObj >= twoDaysAgo && articleDateObj <= today) {
       xml += `    <news:news>
       <news:publication>
         <news:name>صدى العرب</news:name>
         <news:language>ar</news:language>
       </news:publication>
       <news:publication_date>${articleDate}</news:publication_date>
-      <news:title>${article.title.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</news:title>
-      ${article.keywords ? `<news:keywords>${article.keywords}</news:keywords>` : ''}
+      <news:title>${escapeXml(article.title)}</news:title>
+      ${article.keywords ? `<news:keywords>${escapeXml(article.keywords)}</news:keywords>` : ''}
     </news:news>
 `;
     }
@@ -85,7 +99,7 @@ function generateSitemap() {
     if (hasImage && imageUrl) {
       xml += `    <image:image>
       <image:loc>${imageUrl}</image:loc>
-      <image:title>${article.title.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</image:title>
+      <image:title>${escapeXml(article.title)}</image:title>
     </image:image>
 `;
     }
