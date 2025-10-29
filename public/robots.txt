@@ -5,7 +5,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://yourdomain.com/sitemap.xml
+Sitemap: https://arabpress.netlify.app/sitemap.xml
 
 # Bloquer l'accès aux dossiers de build et assets (optionnel)
 Disallow: /src/

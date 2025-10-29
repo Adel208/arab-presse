@@ -128,10 +128,17 @@ function generateSitemap() {
 
   xml += `</urlset>`;
 
-  // Écrire le sitemap dans le dossier public
+  // Écrire le sitemap dans le dossier public (pour le dev)
   const publicDir = path.join(process.cwd(), 'public');
   fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), xml);
   console.log('✅ Sitemap généré avec succès dans public/sitemap.xml');
+
+  // Écrire aussi dans dist/ (pour le build de production)
+  const distDir = path.join(process.cwd(), 'dist');
+  if (fs.existsSync(distDir)) {
+    fs.writeFileSync(path.join(distDir, 'sitemap.xml'), xml);
+    console.log('✅ Sitemap généré avec succès dans dist/sitemap.xml');
+  }
 }
 
 generateSitemap();

@@ -1,0 +1,10 @@
+# Fichiers statiques - ne pas rediriger
+/sitemap.xml  /sitemap.xml  200
+/robots.txt   /robots.txt   200
+
+# Articles - redirection SPA
+/article/*    /article/:splat  200
+
+# Toutes les autres routes vers l'app React
+/*            /index.html  200
+
