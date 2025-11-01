@@ -9,14 +9,14 @@ import { adsConfig } from './config/ads';
 
 export default function Home(): JSX.Element {
   const [searchParams] = useSearchParams();
-  const [selectedCategory, setSelectedCategory] = useState<string>('الكل');
+  const [selectedCategory, setSelectedCategory] = useState<string>('الرئيسة');
 
   useEffect(() => {
     const category = searchParams.get('category');
     if (category) {
       setSelectedCategory(category);
     } else {
-      setSelectedCategory('الكل');
+      setSelectedCategory('الرئيسة');
     }
     
     // Track page view
@@ -25,7 +25,7 @@ export default function Home(): JSX.Element {
 
   const filteredNews = newsData
     .filter((item) =>
-      selectedCategory === 'الكل' || item.category === selectedCategory
+      selectedCategory === 'الرئيسة' || item.category === selectedCategory
     )
     .sort((a, b) => {
       // Trier par date décroissante (plus récent en premier)
@@ -96,7 +96,7 @@ export default function Home(): JSX.Element {
     }
   };
 
-  const canonicalUrl = selectedCategory === 'الكل' 
+  const canonicalUrl = selectedCategory === 'الرئيسة' 
     ? window.location.origin 
     : `${window.location.origin}/?category=${encodeURIComponent(selectedCategory)}`;
 
@@ -104,8 +104,8 @@ export default function Home(): JSX.Element {
   const itemListSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "name": selectedCategory === 'الكل' ? "أحدث الأخبار" : `أخبار ${selectedCategory}`,
-    "description": `قائمة المقالات ${selectedCategory === 'الكل' ? '' : `في فئة ${selectedCategory}`}`,
+    "name": selectedCategory === 'الرئيسة' ? "أحدث الأخبار" : `أخبار ${selectedCategory}`,
+    "description": `قائمة المقالات ${selectedCategory === 'الرئيسة' ? '' : `في فئة ${selectedCategory}`}`,
     "numberOfItems": filteredNews.length,
     "itemListElement": filteredNews.slice(0, 20).map((article, index) => ({
       "@type": "ListItem",
@@ -157,7 +157,7 @@ export default function Home(): JSX.Element {
         <AdBanner slotId={adsConfig.slots.headerBanner} style={{ width: '100%', height: '90px' }} format="horizontal" />
         
         {/* Breaking News Bar */}
-        {selectedCategory === 'الكل' && filteredNews.length > 0 && (
+        {selectedCategory === 'الرئيسة' && filteredNews.length > 0 && (
           <div className="mb-6 bg-gradient-to-r from-red-600 to-red-700 text-white py-3 px-6 rounded-full flex items-center gap-4 shadow-large overflow-hidden relative">
             <span className="font-black text-sm whitespace-nowrap flex items-center gap-2 bg-white/20 px-4 py-1 rounded-full backdrop-blur-sm">
               <svg className="w-5 h-5 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
@@ -174,7 +174,7 @@ export default function Home(): JSX.Element {
         )}
         
         {/* Hero Section - Breaking News - Full Screen with Overlay */}
-        {selectedCategory === 'الكل' && latestArticle && (
+        {selectedCategory === 'الرئيسة' && latestArticle && (
           <section className="mb-16 relative h-[600px] md:h-[700px] rounded-3xl overflow-hidden shadow-large group animate-scaleIn">
             <div className="absolute inset-0">
               <img 
@@ -220,7 +220,7 @@ export default function Home(): JSX.Element {
           <div className="flex-1">
             <div className="flex items-center justify-between mb-10 border-b border-gray-200 pb-6">
               <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 flex items-center gap-3">
-                <span className="text-blue-600">{selectedCategory === 'الكل' ? 'أحدث الأخبار' : `أخبار ${selectedCategory}`}</span>
+                <span className="text-blue-600">{selectedCategory === 'الرئيسة' ? 'أحدث الأخبار' : `أخبار ${selectedCategory}`}</span>
               </h2>
               <p className="text-sm text-gray-600 bg-gray-100 px-4 py-2 rounded-full font-medium">
                 {filteredNews.length} مقال متاح
@@ -354,7 +354,7 @@ export default function Home(): JSX.Element {
                 {categories.map((category) => (
                   <li key={category}>
                     <Link
-                      to={category === 'الكل' ? '/' : `/?category=${encodeURIComponent(category)}`}
+                      to={category === 'الرئيسة' ? '/' : `/?category=${encodeURIComponent(category)}`}
                       onClick={() => setSelectedCategory(category)}
                       className={`w-full block text-right py-4 px-6 rounded-lg font-semibold transition-all duration-200 flex items-center justify-between group ${
                         selectedCategory === category 
@@ -378,7 +378,7 @@ export default function Home(): JSX.Element {
         </section>
 
         {/* Most Read Section */}
-        {selectedCategory === 'الكل' && (
+        {selectedCategory === 'الرئيسة' && (
           <section className="mb-16">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl font-black text-gray-900 flex items-center gap-3">
