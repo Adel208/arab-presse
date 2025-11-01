@@ -6,6 +6,7 @@
  */
 
 const fs = require('fs').promises;
+const fsSync = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
@@ -150,7 +151,28 @@ class AutomationOrchestrator {
       if (!skipGeneration && newsItems.length > 0) {
         await this.log('\n✍️  Étape 3/7: Génération des articles avec Claude AI');
         const generator = new ArticleGenerator(config);
-        const { articles, errors } = await generator.generateArticles(newsItems);
+        // Charger preset si demandé via options
+        let presetText = '';
+        if (options.preset) {
+          try {
+            const presetsPath = path.join(__dirname, 'config/prompt-presets.json');
+            const presetsData = await fs.readFile(presetsPath, 'utf-8');
+            const presets = JSON.parse(presetsData);
+            const p = presets[options.preset];
+            if (p?.instructions?.length) {
+              presetText = p.instructions.map(i => `- ${i}`).join('\n');
+            }
+          } catch (e) {
+            await this.log(`⚠️  Impossible de charger le preset: ${e.message}`);
+          }
+        }
+
+        const effectiveCountry = options.country || (options.preset === 'pays' ? 'Tunisie' : undefined);
+
+        const { articles, errors } = await generator.generateArticles(
+          newsItems,
+          { preset: options.preset, country: effectiveCountry, __presetText: presetText }
+        );
         generatedArticles = articles;
 
         if (generatedArticles.length > 0) {
@@ -259,19 +281,26 @@ class AutomationOrchestrator {
             stdio: 'pipe'
           });
 
-          // Commit
+          // Commit - utiliser un fichier temporaire pour éviter les problèmes d'échappement
           const commitMessage = `🤖 Publication automatique: ${generatedArticles.length} nouveaux articles
 
 Articles:
-${generatedArticles.map(a => `- ${a.title}`).join('\n')}
+${generatedArticles.map(a => `- ${a.title.replace(/"/g, '\\"')}`).join('\n')}
 
 Généré automatiquement par le système d'automatisation`;
 
+          // Écrire le message dans un fichier temporaire pour éviter les problèmes avec les guillemets
+          const tempFile = path.join(projectRoot, '.git-commit-msg.txt');
+          fsSync.writeFileSync(tempFile, commitMessage, 'utf-8');
+
           await this.log('git commit...');
-          execSync(`git commit -m "${commitMessage}"`, {
+          execSync(`git commit -F "${tempFile}"`, {
             cwd: projectRoot,
             stdio: 'pipe'
           });
+          
+          // Supprimer le fichier temporaire
+          fsSync.unlinkSync(tempFile);
 
           // Push
           await this.log('git push...');
@@ -340,7 +369,9 @@ if (require.main === module) {
     skipSocial: args.includes('--skip-social'),
     skipBuild: args.includes('--skip-build'),
     skipGit: args.includes('--skip-git'),
-    dryRun: args.includes('--dry-run')
+    dryRun: args.includes('--dry-run'),
+    preset: (args.find(a => a.startsWith('--preset=')) || '').split('=')[1],
+    country: (args.find(a => a.startsWith('--country=')) || '').split('=')[1]
   };
 
   if (args.includes('--help')) {
@@ -356,6 +387,8 @@ Options:
   --skip-build         Ignore le build du site
   --skip-git           Ignore le commit et push Git
   --dry-run            Mode test sans modifications réelles
+  --preset=<pays>      Utiliser un preset de prompt (actuel: pays)
+  --country=<nom>      Pays ciblé (par défaut: Tunisie si preset=pays)
   --help               Affiche cette aide
 
 Exemples:

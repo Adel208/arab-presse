@@ -67,8 +67,17 @@ class ArticleGenerator {
   /**
    * Génère un article complet avec Claude
    */
-  async generateArticle(newsItem) {
+  async generateArticle(newsItem, options = {}) {
     await this.log(`Génération d'article pour: ${newsItem.title}`);
+
+    // Bloc de préférences (preset/country)
+    let presetBlock = '';
+    if (options.__presetText) {
+      presetBlock += `\n### تفضيلات الأسلوب/التركيز (مطلوبة)\n${options.__presetText}\n`;
+    }
+    if (options.country) {
+      presetBlock += `\n- التركيز الجغرافي: ${options.country}\n`;
+    }
 
     const prompt = `Tu es un rédacteur professionnel pour un média en ligne spécialisé dans l'actualité du monde arabe.  
 Ton objectif est de transformer cette information brute en **article journalistique original, vérifié et conforme aux règles de Google AdSense**.
@@ -85,6 +94,8 @@ RÉSUMÉ: ${newsItem.summary}
 CATÉGORIE SUGGÉRÉE: ${newsItem.suggestedCategory}
 SOURCE: ${newsItem.source}
 LIEN SOURCE: ${newsItem.link}
+
+${presetBlock}
 
 ### INSTRUCTIONS SPÉCIALES
 - Rédige le contenu en **arabe moderne standard (العربية الفصحى)**.
@@ -135,6 +146,14 @@ CRITÈRES ESSENTIELS:
 - Ajoute TOUJOURS une section d'analyse ou de perspective régionale
 - Inclut les sources à la fin de l'article
 - Assure-toi que le JSON est valide et complet
+
+FORMAT STRICT JSON:
+- Retourne un UNIQUE objet JSON sur UNE SEULE LIGNE (minifié)
+- N'utilise pas de retours à la ligne bruts dans les valeurs de chaînes (utilise \\n si nécessaire)
+- Échappe correctement les guillemets et caractères spéciaux dans toutes les chaînes
+- CRITIQUE: Si ton titre ou contenu contient des guillemets doubles ("), tu DOIS les échapper avec un backslash: \\"
+- Exemple correct: "title": "Texte avec des guillemets \\"ici\\" à l'intérieur"
+- Exemple incorrect: "title": "Texte avec des guillemets "ici" à l'intérieur" (cela casserait le JSON)
 
 IMPORTANT: Réponds UNIQUEMENT avec le JSON, rien d'autre avant ou après. Le JSON doit être valide.`;
 
@@ -197,7 +216,9 @@ IMPORTANT: Réponds UNIQUEMENT avec le JSON, rien d'autre avant ou après. Le JS
           .replace(/\n/g, '\\n')
           .replace(/\r/g, '\\r')
           .replace(/\t/g, '\\t')
-          .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '');
+          .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '')
+          // Échapper les guillemets non échappés à l'intérieur des valeurs
+          .replace(/(?<!\\)\"/g, '\\"');
         return `"${key}": "${escapedValue}"`;
       });
 
@@ -208,19 +229,111 @@ IMPORTANT: Réponds UNIQUEMENT avec le JSON, rien d'autre avant ou après. Le JS
         // Si le parsing échoue, essayer avec une méthode plus agressive
         await this.log(`⚠️  Erreur de parsing JSON, tentative de correction avancée...`);
         
+        // Sauvegarder le JSON brut pour debug si nécessaire
+        const originalJson = jsonText;
+        
         // Méthode alternative: remplacer tous les caractères de contrôle par des espaces
         jsonText = jsonText.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, ' ');
         // Échapper les retours à la ligne non échappés dans les chaînes
         jsonText = jsonText.replace(/([^\\])\n/g, '$1\\n');
         jsonText = jsonText.replace(/([^\\])\r/g, '$1\\r');
         
+        // Tentative supplémentaire : corriger les guillemets mal échappés
+        // Pattern pour trouver les guillemets non échappés dans les valeurs de chaînes
+        jsonText = jsonText.replace(/":\s*"([^"]*(?:\\.[^"]*)*)"/g, (match, content) => {
+          // Si le contenu contient des guillemets non échappés, les échapper
+          const fixedContent = content.replace(/(?<!\\)"/g, '\\"');
+          return match.replace(content, fixedContent);
+        });
+        
         try {
           articleData = JSON.parse(jsonText);
         } catch (secondError) {
-          // Dernière tentative: utiliser une bibliothèque de réparation JSON si disponible
-          // Pour l'instant, on log et on échoue
-          await this.log(`✗ JSON invalide reçu de Claude. Position erreur: ${parseError.message}`);
-          throw new Error(`Impossible de parser la réponse JSON après tentatives de correction: ${parseError.message}`);
+          // Dernière tentative avec une méthode encore plus agressive
+          await this.log(`⚠️  Deuxième tentative de correction...`);
+          
+          // Remplacer toutes les séquences de guillemets non échappés
+          let repaired = jsonText;
+          let depth = 0;
+          let inString = false;
+          let result = '';
+          
+          for (let i = 0; i < repaired.length; i++) {
+            const char = repaired[i];
+            const prevChar = i > 0 ? repaired[i - 1] : '';
+            const nextChar = i < repaired.length - 1 ? repaired[i + 1] : '';
+            
+            if (char === '{' && !inString) depth++;
+            if (char === '}' && !inString) depth--;
+            if (char === '"' && prevChar !== '\\' && (prevChar === ':' || prevChar === ',' || prevChar === '{' || prevChar === ' ')) {
+              inString = !inString;
+              result += char;
+            } else if (char === '"' && inString && prevChar !== '\\' && nextChar !== ',' && nextChar !== '}' && nextChar !== ':') {
+              // Guillemet non échappé dans une chaîne - l'échapper
+              result += '\\"';
+            } else {
+              result += char;
+            }
+          }
+          
+          try {
+            articleData = JSON.parse(result);
+          } catch (thirdError) {
+            // Toutes les tentatives de correction ont échoué - faire une retry avec prompt renforcé
+            await this.log(`⚠️  Toutes les corrections ont échoué. Retry avec prompt renforcé...`);
+            
+            // Créer un prompt renforcé qui insiste sur l'échappement JSON
+            const retryPrompt = `${prompt}
+
+⚠️⚠️⚠️ ATTENTION CRITIQUE ⚠️⚠️⚠️
+La réponse précédente avait un JSON invalide. Tu DOIS absolument:
+1. Échapper TOUS les guillemets doubles (") dans tes chaînes avec \\" 
+2. Ne JAMAIS mettre de guillemets non échappés dans les valeurs JSON
+3. Si tu utilises des guillemets dans le titre, summary ou content, échappe-les comme ceci: \\"
+
+Exemple OBLIGATOIRE pour un titre avec guillemets:
+"title": "Texte avec \\"guillemets\\" échappés"
+
+JSON DOIT être valide. Vérifie chaque guillemet avant de répondre.`;
+
+            // Retry avec le prompt renforcé
+            try {
+              const retryMessage = await this.anthropic.messages.create({
+                model: model,
+                max_tokens: maxTokens,
+                temperature: 0.7,
+                messages: [{
+                  role: 'user',
+                  content: retryPrompt
+                }]
+              });
+
+              const retryResponseText = retryMessage.content[0].text.trim();
+              
+              // Nettoyer le markdown
+              let retryJsonText = retryResponseText.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+              const retryJsonMatch = retryJsonText.match(/\{[\s\S]*\}/);
+              if (retryJsonMatch) {
+                retryJsonText = retryJsonMatch[0];
+              }
+              
+              // Appliquer les corrections de base
+              retryJsonText = retryJsonText.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, ' ');
+              retryJsonText = retryJsonText.replace(/([^\\])\n/g, '$1\\n');
+              retryJsonText = retryJsonText.replace(/([^\\])\r/g, '$1\\r');
+              
+              // Parser le JSON
+              articleData = JSON.parse(retryJsonText);
+              await this.log(`✓ Article généré avec succès après retry: ${articleData.title.substring(0, 50)}...`);
+              
+            } catch (retryError) {
+              // Retry aussi échoué
+              await this.log(`✗ JSON invalide après retry avec prompt renforcé.`);
+              await this.log(`   Erreur initiale: ${parseError.message}`);
+              await this.log(`   JSON brut (premiers 300 caractères): ${originalJson.substring(0, 300)}...`);
+              throw new Error(`Impossible de parser la réponse JSON après retry: ${parseError.message}`);
+            }
+          }
         }
       }
 
@@ -245,7 +358,7 @@ IMPORTANT: Réponds UNIQUEMENT avec le JSON, rien d'autre avant ou après. Le JS
   /**
    * Génère plusieurs articles depuis une liste de news
    */
-  async generateArticles(newsItems) {
+  async generateArticles(newsItems, options = {}) {
     await this.log(`=== Début de génération de ${newsItems.length} articles ===`);
 
     const articles = [];
@@ -257,7 +370,7 @@ IMPORTANT: Réponds UNIQUEMENT avec le JSON, rien d'autre avant ou après. Le JS
       try {
         await this.log(`[${i + 1}/${newsItems.length}] Génération en cours...`);
 
-        const article = await this.generateArticle(newsItem);
+        const article = await this.generateArticle(newsItem, options);
 
         // Ajout des métadonnées
         const now = new Date();
