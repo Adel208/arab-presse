@@ -35,8 +35,13 @@ function escapeXml(unsafe) {
 }
 
 function generateSitemap() {
+  // Forcer la date à aujourd'hui (2024) pour éviter les dates futures
+  // Même si le système a une date incorrecte
   const today = new Date();
-  const currentDate = today.toISOString().split('T')[0];
+  // Si la date système est dans le futur, utiliser une date récente valide
+  const maxValidDate = new Date('2024-12-31');
+  const actualToday = today > maxValidDate ? maxValidDate : today;
+  const currentDate = actualToday.toISOString().split('T')[0];
   
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -58,14 +63,17 @@ function generateSitemap() {
     let articleDate = article.date.split('T')[0];
     const articleDateObj = new Date(article.date);
     
-    // Si la date est dans le futur, utiliser la date d'aujourd'hui
-    if (articleDateObj > today) {
+    // Définir une date maximum valide (fin 2024)
+    const maxValidDate = new Date('2024-12-31');
+    
+    // Si la date est dans le futur par rapport à maxValidDate, utiliser currentDate
+    if (articleDateObj > maxValidDate) {
       articleDate = currentDate;
       console.warn(`⚠️  Date future corrigée pour l'article ${article.id} (${article.slug}): ${article.date} → ${currentDate}`);
     }
     
-    // Assurer que lastmod n'est jamais dans le futur
-    const lastmod = articleDate <= currentDate ? articleDate : currentDate;
+    // Assurer que lastmod n'est jamais dans le futur et utilise une date valide
+    const lastmod = articleDateObj <= maxValidDate && articleDate <= currentDate ? articleDate : currentDate;
     
     const hasImage = article.id === 7 || article.id === 8 || article.id === 12 || article.id === 13;
     const imageUrl = article.id === 7 
