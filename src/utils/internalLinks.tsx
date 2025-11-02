@@ -18,7 +18,6 @@ export function findRelatedArticlesByKeywords(
     let score = 0;
     
     // Score basé sur les mots-clés communs
-    const currentKeywords = currentArticle.keywords?.split('،').map(k => k.trim().toLowerCase()) || [];
     const articleKeywords = article.keywords?.split('،').map(k => k.trim().toLowerCase()) || [];
     
     // Compter les mots-clés communs

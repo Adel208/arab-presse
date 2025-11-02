@@ -68,7 +68,6 @@ export default function ArticleDetail() {
       }
     ],
     "datePublished": article.date,
-    "dateModified": article.date,
     "author": {
       "@type": "Person",
       "name": article.author || "هيئة التحرير",
@@ -125,7 +124,6 @@ export default function ArticleDetail() {
         "بيئة"
       ]
     },
-    "articleSection": article.category,
     "keywords": article.keywords || '',
     "mainEntityOfPage": {
       "@type": "WebPage",
@@ -160,8 +158,6 @@ export default function ArticleDetail() {
     "dateModified": article.date,
     // Enrichissement: type de contenu
     "genre": article.category,
-    // Enrichissement: sections de l'article (basé sur les ## dans le contenu)
-    "articleSection": article.category,
     // Enrichissement: type d'article
     "publisherImprint": {
       "@type": "Organization",
