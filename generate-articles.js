@@ -70,10 +70,31 @@ if (!existsSync(mainIndexPath)) {
 }
 
 const mainIndexContent = readFileSync(mainIndexPath, 'utf-8');
-const jsMatch = mainIndexContent.match(/<script[^>]+src="([^"]+)"/);
-const cssMatch = mainIndexContent.match(/<link[^>]+href="([^"]+\.css)"/);
-const jsFile = jsMatch ? jsMatch[1] : '/assets/index.js';
-const cssFile = cssMatch ? cssMatch[1] : '/assets/index.css';
+// Extraire les chemins d'assets - chercher le script module et le CSS
+const jsMatches = mainIndexContent.matchAll(/<script[^>]+src="([^"]+)"/g);
+const cssMatches = mainIndexContent.matchAll(/<link[^>]+href="([^"]+\.css)"/g);
+
+// Prendre le premier script module trouvé
+let jsFile = '/assets/index.js';
+for (const match of jsMatches) {
+  if (match[1].startsWith('/assets/')) {
+    jsFile = match[1];
+    break;
+  }
+}
+
+// Prendre le premier CSS trouvé
+let cssFile = '/assets/index.css';
+for (const match of cssMatches) {
+  if (match[1].startsWith('/assets/')) {
+    cssFile = match[1];
+    break;
+  }
+}
+
+// Extraire le script Google Analytics du fichier index principal
+const gaMatch = mainIndexContent.match(/<script[^>]+src="https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=([^"]+)"/);
+const gaId = gaMatch ? gaMatch[1] : null;
 
 articles.forEach(article => {
   const articleDir = join('dist', 'article', article.slug);
@@ -82,9 +103,19 @@ articles.forEach(article => {
   const articleUrl = `${baseUrl}/article/${article.slug}`;
   const imageUrl = article.image ? `${baseUrl}${article.image}` : null;
 
+  // Construire le HTML avec tous les éléments nécessaires
   const html = `<!doctype html>
 <html lang="ar" dir="rtl">
   <head>
+    ${gaId ? `<!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=${gaId}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '${gaId}');
+    </script>` : ''}
+    
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

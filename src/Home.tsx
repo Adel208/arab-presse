@@ -50,14 +50,14 @@ export default function Home(): JSX.Element {
       2: '/img/marocmanif.webp',
       3: '/img/sudan-un-flags.webp',
       4: '/img/turkey-uk-flags.webp',
-      5: '/img/darfoure.jpg',
+      5: '/img/darfoure.webp',
       6: '/img/ben-barka.webp', // ID 6 n'a pas d'image dans data.ts
       7: '/img/ben-barka.webp',
       8: '/img/marocmanif.webp',
       9: '/img/ben-barka.webp',
       10: '/img/eu-sudan-flags.webp',
-      12: '/img/darfoure.jpg',
-      13: '/img/tunispolic.jpg',
+      12: '/img/darfoure.webp',
+      13: '/img/tunispolic.webp',
     };
     
     return imageMap[article.id] || '/img/gabesmanif.webp'; // Image par défaut si aucun mapping trouvé
@@ -74,16 +74,52 @@ export default function Home(): JSX.Element {
     "publisher": {
       "@type": "Organization",
       "name": "صدى العرب",
+      "alternateName": "Arab Press",
+      "url": window.location.origin,
       "logo": {
         "@type": "ImageObject",
         "url": `${window.location.origin}/logo.svg`,
         "width": 512,
         "height": 512
       },
-      "url": window.location.origin,
+      "description": "مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية، مع تغطية شاملة للأحداث السياسية والاقتصادية والثقافية والبيئية.",
+      "foundingDate": "2024",
       "sameAs": [
-        "https://www.facebook.com/arabpress",
-        "https://twitter.com/arabpress"
+        "https://www.facebook.com/profile.php?id=61583290285231"
+      ],
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "contactType": "Customer Service",
+          "email": "sadaarabe@gmail.com",
+          "availableLanguage": ["Arabic", "French"],
+          "areaServed": {
+            "@type": "Country",
+            "name": "France"
+          }
+        },
+        {
+          "@type": "ContactPoint",
+          "contactType": "Editorial",
+          "email": "sadaarabe@gmail.com",
+          "availableLanguage": ["Arabic", "French"]
+        },
+        {
+          "@type": "ContactPoint",
+          "contactType": "Partnership",
+          "email": "sadaarabe@gmail.com",
+          "availableLanguage": ["Arabic", "French", "English"]
+        }
+      ],
+      "publishingPrinciples": `${window.location.origin}/terms`,
+      "knowsAbout": [
+        "أخبار عربية",
+        "سياسة",
+        "اقتصاد",
+        "رياضة",
+        "تكنولوجيا",
+        "ثقافة",
+        "بيئة"
       ]
     },
     "potentialAction": {
@@ -132,17 +168,22 @@ export default function Home(): JSX.Element {
         <title>صدى العرب - مصدرك الموثوق للأخبار العاجلة</title>
         <meta name="description" content="مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية، مع تغطية شاملة للأحداث السياسية والاقتصادية والثقافية والبيئية." />
         <link rel="canonical" href={canonicalUrl} />
+        <link rel="alternate" type="application/rss+xml" title="صدى العرب - RSS Feed" href={`${window.location.origin}/feed.xml`} />
         
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:title" content="صدى العرب" />
         <meta property="og:description" content="مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية" />
         <meta property="og:site_name" content="صدى العرب" />
-        <meta property="og:image" content={`${window.location.origin}/img/gabesmanif.webp`} />
+        <meta property="og:image" content={`${window.location.origin}/img/og-home.webp`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:type" content="image/webp" />
         
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="صدى العرب" />
         <meta name="twitter:description" content="مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية" />
+        <meta name="twitter:image" content={`${window.location.origin}/img/og-home.webp`} />
         
         <script type="application/ld+json">
           {JSON.stringify(homeStructuredData)}
@@ -238,6 +279,7 @@ export default function Home(): JSX.Element {
                         width="400"
                         height="300"
                         loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -354,7 +396,7 @@ export default function Home(): JSX.Element {
                 {categories.map((category) => (
                   <li key={category}>
                     <Link
-                      to={category === 'الرئيسة' ? '/' : `/?category=${encodeURIComponent(category)}`}
+                      to={category === 'الرئيسة' ? '/' : `/category/${encodeURIComponent(category)}`}
                       onClick={() => setSelectedCategory(category)}
                       className={`w-full block text-right py-4 px-6 rounded-lg font-semibold transition-all duration-200 flex items-center justify-between group ${
                         selectedCategory === category 
@@ -370,6 +412,28 @@ export default function Home(): JSX.Element {
                   </li>
                 ))}
               </ul>
+              
+              {/* Abonnement RSS */}
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <a
+                  href="/feed.xml"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between gap-3 w-full py-3 px-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-200 shadow-md hover:shadow-lg group"
+                  title="اشترك في آخر الأخبار عبر RSS"
+                >
+                  <div className="flex items-center gap-2">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.185h4.817c-.03-13.231-10.755-23.954-24-24v4.815z"/>
+                    </svg>
+                    <span className="font-bold text-sm">اشترك في RSS</span>
+                  </div>
+                  <span className="text-xs opacity-90 group-hover:opacity-100">→</span>
+                </a>
+                <p className="text-xs text-gray-500 mt-2 text-center">
+                  آخر الأخبار مباشرة في قارئ RSS
+                </p>
+              </div>
             </div>
             
             {/* Publicité dans la sidebar */}

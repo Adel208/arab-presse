@@ -20,23 +20,30 @@ export default function Footer() {
     "description": "مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية، مع تغطية شاملة للأحداث السياسية والاقتصادية والثقافية والبيئية.",
     "foundingDate": "2024",
     "sameAs": [
-      "https://www.facebook.com/arabpress",
-      "https://twitter.com/arabpress",
-      "https://www.instagram.com/arabpress",
-      "https://www.youtube.com/arabpress"
+      "https://www.facebook.com/profile.php?id=61583290285231"
     ],
     "contactPoint": [
       {
         "@type": "ContactPoint",
         "contactType": "Customer Service",
-        "email": "contact@echode-larabe.com",
-        "availableLanguage": ["Arabic"],
-        "areaServed": "TN"
+        "email": "sadaarabe@gmail.com",
+        "availableLanguage": ["Arabic", "French"],
+        "areaServed": {
+          "@type": "Country",
+          "name": "France"
+        }
       },
       {
         "@type": "ContactPoint",
         "contactType": "Editorial",
-        "availableLanguage": ["Arabic"]
+        "email": "sadaarabe@gmail.com",
+        "availableLanguage": ["Arabic", "French"]
+      },
+      {
+        "@type": "ContactPoint",
+        "contactType": "Partnership",
+        "email": "sadaarabe@gmail.com",
+        "availableLanguage": ["Arabic", "French", "English"]
       }
     ],
     "publishingPrinciples": `${window.location.origin}/terms`,
@@ -58,7 +65,7 @@ export default function Footer() {
           {JSON.stringify(organizationSchema)}
         </script>
       </Helmet>
-      <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-300 mt-20 border-t border-gray-700/50">
+      <footer className="font-arabic bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-300 mt-20 border-t border-gray-700/50">
       <div className="max-w-7xl mx-auto px-6 md:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* À propos */}
@@ -78,12 +85,12 @@ export default function Footer() {
           <div>
             <h4 className="text-white text-lg font-bold mb-4">الأقسام</h4>
             <ul className="space-y-2">
-              <li><Link to="/?category=سياسة" className="hover:text-primary-400 transition-colors duration-300 font-medium">سياسة</Link></li>
-              <li><Link to="/?category=اقتصاد" className="hover:text-primary-400 transition-colors duration-300 font-medium">اقتصاد</Link></li>
-              <li><Link to="/?category=رياضة" className="hover:text-primary-400 transition-colors duration-300 font-medium">رياضة</Link></li>
-              <li><Link to="/?category=تكنولوجيا" className="hover:text-primary-400 transition-colors duration-300 font-medium">تكنولوجيا</Link></li>
-              <li><Link to="/?category=ثقافة" className="hover:text-primary-400 transition-colors duration-300 font-medium">ثقافة</Link></li>
-              
+              <li><Link to="/category/سياسة" className="hover:text-primary-400 transition-colors duration-300 font-medium">سياسة</Link></li>
+              <li><Link to="/category/اقتصاد" className="hover:text-primary-400 transition-colors duration-300 font-medium">اقتصاد</Link></li>
+              <li><Link to="/category/رياضة" className="hover:text-primary-400 transition-colors duration-300 font-medium">رياضة</Link></li>
+              <li><Link to="/category/تكنولوجيا" className="hover:text-primary-400 transition-colors duration-300 font-medium">تكنولوجيا</Link></li>
+              <li><Link to="/category/ثقافة" className="hover:text-primary-400 transition-colors duration-300 font-medium">ثقافة</Link></li>
+              <li><Link to="/category/بيئة" className="hover:text-primary-400 transition-colors duration-300 font-medium">بيئة</Link></li>
             </ul>
           </div>
 
@@ -94,18 +101,30 @@ export default function Footer() {
               <li><Link to="/" className="hover:text-primary-400 transition-colors duration-300 font-medium">الصفحة الرئيسية</Link></li>
               <li><Link to="/about" className="hover:text-primary-400 transition-colors duration-300 font-medium">من نحن</Link></li>
               <li><Link to="/contact" className="hover:text-primary-400 transition-colors duration-300 font-medium">اتصل بنا</Link></li>
+              <li><Link to="/faq" className="hover:text-primary-400 transition-colors duration-300 font-medium">الأسئلة الشائعة</Link></li>
               <li><Link to="/privacy" className="hover:text-primary-400 transition-colors duration-300 font-medium">سياسة الخصوصية</Link></li>
               <li><Link to="/terms" className="hover:text-primary-400 transition-colors duration-300 font-medium">شروط الاستخدام</Link></li>
+              <li><a href="/feed.xml" target="_blank" rel="noopener noreferrer" className="hover:text-primary-400 transition-colors duration-300 font-medium flex items-center gap-2">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.185h4.817c-.03-13.231-10.755-23.954-24-24v4.815z"/>
+                </svg>
+                اشترك في RSS
+              </a></li>
             </ul>
           </div>
 
           {/* تابعنا */}
           <div>
             <h4 className="text-white text-lg font-bold mb-4">تابعنا</h4>
-            <div className="flex gap-3 mb-4">
-              <a href="#facebook" className="w-11 h-11 bg-primary-600 rounded-full flex items-center justify-center hover:bg-primary-700 hover:scale-110 transition-all duration-300 shadow-medium hover:shadow-large">
+            <div className="flex gap-3 mb-4 flex-wrap">
+              <a href="https://www.facebook.com/profile.php?id=61583290285231" target="_blank" rel="noopener noreferrer" className="w-11 h-11 bg-primary-600 rounded-full flex items-center justify-center hover:bg-primary-700 hover:scale-110 transition-all duration-300 shadow-medium hover:shadow-large" title="تابعنا على Facebook">
                 <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+              <a href="/feed.xml" target="_blank" rel="noopener noreferrer" className="w-11 h-11 bg-orange-600 rounded-full flex items-center justify-center hover:bg-orange-700 hover:scale-110 transition-all duration-300 shadow-medium hover:shadow-large" title="اشترك في RSS Feed">
+                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.185h4.817c-.03-13.231-10.755-23.954-24-24v4.815z"/>
                 </svg>
               </a>
               <a href="#twitter" className="w-11 h-11 bg-sky-500 rounded-full flex items-center justify-center hover:bg-sky-600 hover:scale-110 transition-all duration-300 shadow-medium hover:shadow-large">

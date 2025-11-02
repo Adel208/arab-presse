@@ -1,15 +1,19 @@
 # Fichiers statiques - servir directement AVANT la redirection SPA
 # Le flag ! force Netlify à servir le fichier directement sans redirection
+# IMPORTANT: Ces règles DOIVENT être avant toutes les autres pour que Googlebot puisse les récupérer
 /sitemap.xml  /sitemap.xml  200!
 /robots.txt   /robots.txt   200!
+/feed.xml     /feed.xml     200!
 
-# Assets statiques
-/assets/*     /assets/:splat
-/img/*        /img/:splat
+# Assets statiques - servir directement
+/assets/*     /assets/:splat  200!
+/img/*        /img/:splat     200!
 
-# Articles - redirection SPA
-/article/*    /article/:splat  200
+# Articles - TOUS vers index.html (React Router gère le routage)
+# Netlify préserve automatiquement les paramètres de requête avec 200
+/article/*    /index.html  200
 
 # Toutes les autres routes vers l'app React (DOIT être en dernier)
+# Netlify préserve automatiquement les paramètres de requête avec 200
 /*            /index.html  200
 

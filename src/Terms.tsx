@@ -115,7 +115,7 @@ export default function Terms() {
                 إذا كان لديك أي أسئلة حول شروط الاستخدام هذه، يرجى الاتصال بنا:
               </p>
               <p className="mt-2">
-                <strong>البريد الإلكتروني:</strong> legal@echode-larabe.com
+                <strong>البريد الإلكتروني:</strong> sadaarabe@gmail.com
               </p>
             </section>
 

@@ -6,7 +6,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white/95 backdrop-blur-md shadow-soft sticky top-0 z-50 border-b border-gray-100">
+    <header className="font-arabic bg-white/95 backdrop-blur-md shadow-soft sticky top-0 z-50 border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-6 md:px-8 py-5">
         {/* Desktop: Logo + Nav sur une seule ligne */}
         <div className="hidden md:flex items-center justify-between gap-8">
@@ -25,7 +25,7 @@ export default function Navbar() {
             {categories.map((cat) => (
               <Link
                 key={cat}
-                to={cat === 'الرئيسة' ? '/' : `/?category=${encodeURIComponent(cat)}`}
+                to={cat === 'الرئيسة' ? '/' : `/category/${encodeURIComponent(cat)}`}
                 className="px-5 py-2.5 rounded-full font-bold text-gray-700 hover:bg-gradient-to-r hover:from-primary-600 hover:to-primary-700 hover:text-white hover:shadow-medium transition-all duration-300 text-sm whitespace-nowrap border border-transparent hover:border-primary-500"
               >
                 {cat}
@@ -84,7 +84,7 @@ export default function Navbar() {
               {categories.map((cat) => (
                 <Link
                   key={cat}
-                  to={cat === 'الرئيسة' ? '/' : `/?category=${encodeURIComponent(cat)}`}
+                  to={cat === 'الرئيسة' ? '/' : `/category/${encodeURIComponent(cat)}`}
                   onClick={() => setIsMenuOpen(false)}
                   className="px-4 py-3 rounded-xl font-bold text-gray-700 hover:bg-gradient-to-r hover:from-primary-600 hover:to-primary-700 hover:text-white hover:shadow-medium transition-all duration-300 text-center"
                 >

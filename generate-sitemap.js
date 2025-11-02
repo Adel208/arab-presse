@@ -46,15 +46,12 @@ function generateSitemap() {
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  
-  <!-- Page d'accueil -->
   <url>
     <loc>${DOMAIN}/</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-  
 `;
 
   // Ajouter les articles
@@ -107,11 +104,11 @@ function generateSitemap() {
 `;
   });
 
-  // Ajouter les pages catégories
+  // Ajouter les pages catégories (nouvelles routes optimisées)
   const categories = ['سياسة', 'اقتصاد', 'رياضة', 'تكنولوجيا', 'ثقافة', 'بيئة'];
   categories.forEach(category => {
     xml += `  <url>
-    <loc>${DOMAIN}/?category=${encodeURIComponent(category)}</loc>
+    <loc>${DOMAIN}/category/${encodeURIComponent(category)}</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -120,12 +117,13 @@ function generateSitemap() {
 `;
   });
 
-  // Ajouter les pages légales
+  // Ajouter les pages légales et FAQ
   const legalPages = [
     { path: '/about', priority: '0.7', changefreq: 'monthly' },
     { path: '/contact', priority: '0.7', changefreq: 'monthly' },
     { path: '/privacy', priority: '0.8', changefreq: 'monthly' },
-    { path: '/terms', priority: '0.8', changefreq: 'monthly' }
+    { path: '/terms', priority: '0.8', changefreq: 'monthly' },
+    { path: '/faq', priority: '0.7', changefreq: 'monthly' }
   ];
 
   legalPages.forEach(page => {

@@ -34,7 +34,7 @@
     }
   ],
   "automation": {
-    "dailyLimit": 1,
+    "dailyLimit": 3,
     "minInterval": 8,
     "categories": ["سياسة", "اقتصاد", "رياضة", "تكنولوجيا", "ثقافة", "بيئة"],
     "language": "ar",

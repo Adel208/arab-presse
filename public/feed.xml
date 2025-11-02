@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/">
+  <channel>
+    <title>صدى العرب</title>
+    <link>https://arabpress.netlify.app</link>
+    <description>مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية، مع تغطية شاملة للأحداث السياسية والاقتصادية والثقافية والبيئية.</description>
+    <language>ar</language>
+    <lastBuildDate>Sun, 02 Nov 2025 10:27:59 +0000</lastBuildDate>
+    <pubDate>Sun, 02 Nov 2025 10:27:59 +0000</pubDate>
+    <managingEditor>sadaarabe@gmail.com (صدى العرب)</managingEditor>
+    <webMaster>sadaarabe@gmail.com (صدى العرب)</webMaster>
+    <generator>ArabPress RSS Generator</generator>
+    <atom:link href="https://arabpress.netlify.app/feed.xml" rel="self" type="application/rss+xml"/>
+    <image>
+      <url>https://arabpress.netlify.app/logo.svg</url>
+      <title>صدى العرب</title>
+      <link>https://arabpress.netlify.app</link>
+    </image>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    
+    <item>
+      <title>افتتاح المتحف المصري الكبير: إنجاز ثقافي عظيم لمصر وللعالم العربي</title>
+      <link>https://arabpress.netlify.app/article/afttah-almthf-almsry-alkbyr-injaz-thqafy-azym-lmsr-wllaalm-a</link>
+      <guid isPermaLink="true">https://arabpress.netlify.app/article/afttah-almthf-almsry-alkbyr-injaz-thqafy-azym-lmsr-wllaalm-a</guid>
+      <description>يفتتح المتحف المصري الكبير رسميًا اليوم، ليكون أحد أبرز المعالم الثقافية في العصر الحديث. وسيتم عرض المحتويات الكاملة لمقبرة توت عنخ آمون للمرة الأولى.</description>
+      <pubDate>Sat, 01 Nov 2025 00:00:00 +0000</pubDate>
+      <dc:creator>هيئة التحرير</dc:creator>
+      <category>ثقافة</category>
+    </item>
+    <item>
+      <title>مجلس الأمن الدولي يؤيد خطة المغرب للحكم الذاتي في الصحراء الغربية</title>
+      <link>https://arabpress.netlify.app/article/mjls-alamn-aldwly-yyd-khta-almghrb-llhkm-aldhaty-fy-alshra-a</link>
+      <guid isPermaLink="true">https://arabpress.netlify.app/article/mjls-alamn-aldwly-yyd-khta-almghrb-llhkm-aldhaty-fy-alshra-a</guid>
+      <description>اعتمد مجلس الأمن الدولي الجمعة مقترح المغرب للحكم الذاتي في الصحراء الغربية، معتبرًا أنه الحل الأكثر واقعية لهذا النزاع المستمر منذ عقود.</description>
+      <pubDate>Sat, 01 Nov 2025 00:00:00 +0000</pubDate>
+      <dc:creator>هيئة التحرير</dc:creator>
+      <category>سياسة</category>
+    </item>
+    <item>
+      <title>بعثة الأمم المتحدة تحذر من &quot;فظائع ممنهجة&quot; في السودان والجيش ينقل عملياته</title>
+      <link>https://arabpress.netlify.app/article/batha-alamm-almthda-thdhr-mn-fzaa-mmnhja-fy-alswdan-waljysh-</link>
+      <guid isPermaLink="true">https://arabpress.netlify.app/article/batha-alamm-almthda-thdhr-mn-fzaa-mmnhja-fy-alswdan-waljysh-</guid>
+      <description>بعثة الأمم المتحدة لتقصي الحقائق في السودان حذرت من &quot;فظائع ممنهجة&quot; في منطقة الفاشر، فيما نقل الجيش السوداني عملياته إلى مكان آخر.</description>
+      <pubDate>Sat, 01 Nov 2025 00:00:00 +0000</pubDate>
+      <dc:creator>هيئة التحرير</dc:creator>
+      <category>سياسة</category>
+    </item>
+    <item>
+      <title>معرض الجزائر الدولي للكتاب: انطلاق دورة جديدة تحت شعار التنوع الثقافي</title>
+      <link>https://arabpress.netlify.app/article/mard-aljzar-aldwly-llktab-antlaq-dwra-jdyda-tht-shaar-altnwa</link>
+      <guid isPermaLink="true">https://arabpress.netlify.app/article/mard-aljzar-aldwly-llktab-antlaq-dwra-jdyda-tht-shaar-altnwa</guid>
+      <description>انطلقت الدورة الثامنة والعشرين لمعرض الجزائر الدولي للكتاب، وسط مشاركة واسعة من دور النشر العربية والعالمية. يسلط المعرض الضوء على الإرث الثقافي الجزائري وأهمية التنوع الثقافي في المنطقة.</description>
+      <pubDate>Thu, 30 Oct 2025 00:00:00 +0000</pubDate>
+      <dc:creator>هيئة التحرير</dc:creator>
+      <category>ثقافة</category>
+    </item>
+    <item>
+      <title>الاشتباكات في غزة تُثير المخاوف من انهيار وقف إطلاق النار</title>
+      <link>https://arabpress.netlify.app/article/alashtbakat-fy-ghza-tthyr-almkhawf-mn-anhyar-wqf-itlaq-alnar</link>
+      <guid isPermaLink="true">https://arabpress.netlify.app/article/alashtbakat-fy-ghza-tthyr-almkhawf-mn-anhyar-wqf-itlaq-alnar</guid>
+      <description>على الرغم من إعلان إسرائيل التزامها بوقف إطلاق النار، فإن المعارك بين الجيش الإسرائيلي وحركة حماس في قطاع غزة لا تزال مستمرة، مما يثير المخاوف من انهيار الهدنة الهشة.</description>
+      <pubDate>Thu, 30 Oct 2025 00:00:00 +0000</pubDate>
+      <dc:creator>هيئة التحرير</dc:creator>
+      <category>سياسة</category>
+    </item>
+    <item>
+      <title>قطعة نقدية أرجنتينية تخلد هدف مارادونا الأسطوري في مونديال 1986</title>
+      <link>https://arabpress.netlify.app/article/qtaa-nqdya-arjntynya-tkhld-hdf-maradwna-alastwry-fy-mwndyal-</link>
+      <guid isPermaLink="true">https://arabpress.netlify.app/article/qtaa-nqdya-arjntynya-tkhld-hdf-maradwna-alastwry-fy-mwndyal-</guid>
+      <description>أصدر المصرف المركزي الأرجنتيني قطعة نقدية تذكارية احتفاءً بهدف أسطوري لأسطورة كرة القدم دييغو مارادونا في كأس العالم 1986، إلا أن الإعلان الرسمي تجاهل ذكر اسمه، ما أثار انتقادات على مواقع التواصل الاجتماعي.</description>
+      <pubDate>Thu, 30 Oct 2025 00:00:00 +0000</pubDate>
+      <dc:creator>هيئة التحرير</dc:creator>
+      <category>رياضة</category>
+    </item>
+    <item>
+      <title>تداعيات قضية اختطاف المهدي بن بركة: هل هناك تفاهمات سرية بين فرنسا والمغرب؟</title>
+      <link>https://arabpress.netlify.app/article/tdaayat-qdya-akhttaf-almhdy-bn-brka-hl-hnak-tfahmat-srya-byn</link>
+      <guid isPermaLink="true">https://arabpress.netlify.app/article/tdaayat-qdya-akhttaf-almhdy-bn-brka-hl-hnak-tfahmat-srya-byn</guid>
+      <description>تتصاعد التوترات السياسية في فرنسا حول فرض ضرائب جديدة على الأثرياء، فيما تثير قضية اختطاف المهدي بن بركة في باريس عام 1965 تساؤلات حول التفاهمات الأمنية والسياسية بين البلدين.</description>
+      <pubDate>Wed, 29 Oct 2025 00:00:00 +0000</pubDate>
+      <dc:creator>هيئة التحرير</dc:creator>
+      <category>سياسة</category>
+    </item>
+    <item>
+      <title>ستون عاماً على اختفاء بن بركة: لغز سياسي يكشف تواطؤاً فرنسياً مغربياً</title>
+      <link>https://arabpress.netlify.app/article/stwn-aama-ala-akhtfa-bn-brka-lghz-syasy-ykshf-twata-frnsya-m</link>
+      <guid isPermaLink="true">https://arabpress.netlify.app/article/stwn-aama-ala-akhtfa-bn-brka-lghz-syasy-ykshf-twata-frnsya-m</guid>
+      <description>بعد مرور ستة عقود على اختطاف المعارض المغربي المهدي بن بركة في باريس، تتجدد المطالبات بكشف الحقيقة الكاملة حول قضية أصبحت رمزاً للتواطؤ السياسي بين الدول. الصحافة الفرنسية تعيد فتح الملف مطالبة برفع السرية عن الوثائق الأمنية.</description>
+      <pubDate>Wed, 29 Oct 2025 00:00:00 +0000</pubDate>
+      <dc:creator>هيئة التحرير</dc:creator>
+      <category>سياسة</category>
+    </item>
+    <item>
+      <title>الاتحاد الأوروبي يدين انتهاكات الدعم السريع في الفاشر</title>
+      <link>https://arabpress.netlify.app/article/alathad-alawrwby-ydyn-anthakat-aldam-alsrya-fy-alfashr</link>
+      <guid isPermaLink="true">https://arabpress.netlify.app/article/alathad-alawrwby-ydyn-anthakat-aldam-alsrya-fy-alfashr</guid>
+      <description>أدانت المفوضية الأوروبية بشدة ما وصفته بالانتهاكات الوحشية لقوات الدعم السريع في مدينة الفاشر السودانية، وسط اتهامات بإعدام أكثر من ألفي مدني. يأتي هذا الموقف في ظل تصاعد المخاوف الدولية من البعد الإثني للصراع المستمر في السودان.</description>
+      <pubDate>Wed, 29 Oct 2025 00:00:00 +0000</pubDate>
+      <dc:creator>هيئة التحرير</dc:creator>
+      <category>سياسة</category>
+    </item>
+    <item>
+      <title>الأمم المتحدة تحذر من كارثة إنسانية وشيكة في الفاشر بعد إعلان البرهان انسحاب الجيش السوداني</title>
+      <link>https://arabpress.netlify.app/article/gabes-pollution-environnement</link>
+      <guid isPermaLink="true">https://arabpress.netlify.app/article/gabes-pollution-environnement</guid>
+      <description>تحذيرات أممية من تداعيات إنسانية كارثية في الفاشر عقب قرار البرهان بانسحاب الجيش، مع مخاوف من سيطرة الدعم السريع على غرب السودان وتعميق الانقسام في البلاد.</description>
+      <pubDate>Tue, 28 Oct 2025 00:00:00 +0000</pubDate>
+      <dc:creator>هيئة التحرير</dc:creator>
+      <category>سياسة</category>
+    </item>
+    <item>
+      <title>تركيا توقع صفقة تاريخية لشراء 20 طائرة يوروفايتر تايفون من بريطانيا بـ8 مليارات جنيه إسترليني</title>
+      <link>https://arabpress.netlify.app/article/trkya-twqa-sfqa-tarykhya-lshra-20-tara-ywrwfaytr-tayfwn-mn-b</link>
+      <guid isPermaLink="true">https://arabpress.netlify.app/article/trkya-twqa-sfqa-tarykhya-lshra-20-tara-ywrwfaytr-tayfwn-mn-b</guid>
+      <description>أبرمت أنقرة ولندن اتفاقية تاريخية لشراء 20 طائرة مقاتلة بقيمة 8 مليارات جنيه إسترليني، مع سعي تركي للحصول على 24 طائرة إضافية من قطر وعمان، في خطوة تعزز قدراتها العسكرية الجوية.</description>
+      <pubDate>Tue, 28 Oct 2025 00:00:00 +0000</pubDate>
+      <dc:creator>هيئة التحرير</dc:creator>
+      <category>سياسة</category>
+    </item>
+    <item>
+      <title>مستقبل دارفور بعد سيطرة الدعم السريع على الفاشر: تحولات استراتيجية وأزمة إنسانية متفاقمة</title>
+      <link>https://arabpress.netlify.app/article/mstqbl-darfwr-bad-sytra-aldam-alsrya-ala-alfashr-thwlat-astr</link>
+      <guid isPermaLink="true">https://arabpress.netlify.app/article/mstqbl-darfwr-bad-sytra-aldam-alsrya-ala-alfashr-thwlat-astr</guid>
+      <description>سقوط الفاشر في قبضة قوات الدعم السريع يمثل نقطة تحول حاسمة في الصراع السوداني، مع تداعيات إنسانية وسياسية عميقة على مستقبل دارفور والسودان بأكمله.</description>
+      <pubDate>Tue, 28 Oct 2025 00:00:00 +0000</pubDate>
+      <dc:creator>هيئة التحرير</dc:creator>
+      <category>سياسة</category>
+    </item>
+  </channel>
+</rss>

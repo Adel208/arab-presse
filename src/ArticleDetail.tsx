@@ -7,17 +7,20 @@ import RelatedArticles from './components/RelatedArticles';
 import Breadcrumb from './components/Breadcrumb';
 import { trackPageView, trackSocialShare } from './utils/analytics';
 import { adsConfig } from './config/ads';
+import { enhanceParagraphWithLinks } from './utils/internalLinks';
 
 export default function ArticleDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const article = newsData.find(item => item.slug === slug);
+  // Nettoyer le slug pour enlever d'éventuels paramètres de requête
+  const cleanSlug = slug?.split('?')[0] || slug;
+  const article = newsData.find(item => item.slug === cleanSlug);
 
   // Track page view
   useEffect(() => {
     if (article) {
-      trackPageView(`/article/${slug}`, article.title);
+      trackPageView(`/article/${cleanSlug}`, article.title);
     }
-  }, [slug, article]);
+  }, [cleanSlug, article]);
   
   // Construire l'URL absolue pour l'image
   const imageUrl = article?.image 
@@ -74,16 +77,52 @@ export default function ArticleDetail() {
     "publisher": {
       "@type": "Organization",
       "name": "صدى العرب",
+      "alternateName": "Arab Press",
+      "url": window.location.origin,
       "logo": {
         "@type": "ImageObject",
         "url": `${window.location.origin}/logo.svg`,
         "width": 512,
         "height": 512
       },
-      "url": window.location.origin,
+      "description": "مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية، مع تغطية شاملة للأحداث السياسية والاقتصادية والثقافية والبيئية.",
+      "foundingDate": "2024",
       "sameAs": [
-        "https://www.facebook.com/arabpress",
-        "https://twitter.com/arabpress"
+        "https://www.facebook.com/profile.php?id=61583290285231"
+      ],
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "contactType": "Customer Service",
+          "email": "sadaarabe@gmail.com",
+          "availableLanguage": ["Arabic", "French"],
+          "areaServed": {
+            "@type": "Country",
+            "name": "France"
+          }
+        },
+        {
+          "@type": "ContactPoint",
+          "contactType": "Editorial",
+          "email": "sadaarabe@gmail.com",
+          "availableLanguage": ["Arabic", "French"]
+        },
+        {
+          "@type": "ContactPoint",
+          "contactType": "Partnership",
+          "email": "sadaarabe@gmail.com",
+          "availableLanguage": ["Arabic", "French", "English"]
+        }
+      ],
+      "publishingPrinciples": `${window.location.origin}/terms`,
+      "knowsAbout": [
+        "أخبار عربية",
+        "سياسة",
+        "اقتصاد",
+        "رياضة",
+        "تكنولوجيا",
+        "ثقافة",
+        "بيئة"
       ]
     },
     "articleSection": article.category,
@@ -103,6 +142,30 @@ export default function ArticleDetail() {
     "speakable": {
       "@type": "SpeakableSpecification",
       "cssSelector": ["h1", "h2"]
+    },
+    // Enrichissement: description du sujet principal
+    "about": {
+      "@type": "Thing",
+      "name": article.category,
+      "description": `مقال عن ${article.category}`
+    },
+    // Enrichissement: mentions dans les mots-clés
+    "mentions": article.keywords ? article.keywords.split('،').map(k => ({
+      "@type": "Thing",
+      "name": k.trim()
+    })) : [],
+    // Enrichissement: URL de l'article pour le partage
+    "url": canonicalUrl,
+    // Enrichissement: date de modification (utiliser datePublished pour l'instant)
+    "dateModified": article.date,
+    // Enrichissement: type de contenu
+    "genre": article.category,
+    // Enrichissement: sections de l'article (basé sur les ## dans le contenu)
+    "articleSection": article.category,
+    // Enrichissement: type d'article
+    "publisherImprint": {
+      "@type": "Organization",
+      "name": "صدى العرب"
     }
   };
 
@@ -140,6 +203,11 @@ export default function ArticleDetail() {
         <meta name="twitter:image" content={imageUrl} />
         <meta name="twitter:creator" content={article.author || "هيئة التحرير"} />
         
+        {/* Preload de l'image hero pour améliorer les performances */}
+        {article.image && (
+          <link rel="preload" href={article.image} as="image" type={article.image.includes('.webp') ? 'image/webp' : 'image/jpeg'} />
+        )}
+        
         {/* Données structurées JSON-LD */}
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
@@ -151,7 +219,7 @@ export default function ArticleDetail() {
         <Breadcrumb 
           items={[
             { label: 'الرئيسية', url: '/' },
-            { label: article.category, url: `/?category=${encodeURIComponent(article.category)}` },
+            { label: article.category, url: `/category/${encodeURIComponent(article.category)}` },
             { label: article.title, url: `/article/${article.slug}` }
           ]}
         />
@@ -191,7 +259,7 @@ export default function ArticleDetail() {
               />
             ) : article.id === 12 ? (
               <img 
-                src="/img/darfoure.jpg" 
+                src="/img/darfoure.webp" 
                 alt="تقرير عن دارفور"
                 width="1200"
                 height="800"
@@ -200,7 +268,7 @@ export default function ArticleDetail() {
               />
             ) : article.id === 13 ? (
               <img 
-                src="/img/tunispolic.jpg" 
+                src="/img/tunispolic.webp" 
                 alt="السلطات التونسية تعلق نشاط منظمات المجتمع المدني"
                 width="1200"
                 height="800"
@@ -317,10 +385,20 @@ export default function ArticleDetail() {
                             </p>
                           );
                         } else {
-                          // Normal paragraph
+                          // Normal paragraph avec liens internes
+                          // Ne pas ajouter de liens dans :
+                          // - Le premier paragraphe de la première section (index === 0 && pIndex === 0)
+                          // - Les paragraphes trop courts (< 150 caractères)
+                          // - Plus d'un lien par paragraphe pour éviter la surcharge
+                          const isFirstParagraphOfFirstSection = index === 0 && pIndex === 0;
+                          const shouldAddLinks = !isFirstParagraphOfFirstSection && paragraph.trim().length > 150;
+                          
                           return (
                             <p key={pIndex} className="leading-relaxed">
-                              {paragraph}
+                              {shouldAddLinks 
+                                ? enhanceParagraphWithLinks(paragraph, article, newsData)
+                                : paragraph
+                              }
                             </p>
                           );
                         }

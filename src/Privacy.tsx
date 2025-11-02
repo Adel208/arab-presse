@@ -166,7 +166,7 @@ export default function Privacy() {
                 إذا كان لديك أي أسئلة حول سياسة الخصوصية هذه، يرجى الاتصال بنا على:
               </p>
               <p className="mt-2">
-                <strong>البريد الإلكتروني:</strong> privacy@echode-larabe.com
+                <strong>البريد الإلكتروني:</strong> sadaarabe@gmail.com
               </p>
             </section>
 

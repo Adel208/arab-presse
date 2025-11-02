@@ -29,12 +29,17 @@
     <link rel="dns-prefetch" href="https://www.google-analytics.com">
     <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
     
+    <!-- Preload des ressources critiques -->
+    <link rel="preload" href="/img/og-home.webp" as="image" type="image/webp">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" as="style">
+    
     <!-- Favicon et icônes -->
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <link rel="icon" type="image/png" href="/favicon.ico" />
     <!-- Utiliser logo.svg comme apple-touch-icon -->
     <link rel="apple-touch-icon" href="/logo.svg" />
     <link rel="manifest" href="/manifest.json" />
+    <link rel="alternate" type="application/rss+xml" title="صدى العرب - RSS Feed" href="https://arabpress.netlify.app/feed.xml" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <!-- SEO Meta Tags -->
@@ -62,21 +67,116 @@
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ar_AR" />
     <meta property="og:site_name" content="صدى العرب" />
-    <meta property="og:image" content="https://arabpress.netlify.app/logo.svg" />
-    <meta property="og:image:width" content="512" />
-    <meta property="og:image:height" content="512" />
+    <meta property="og:image" content="https://arabpress.netlify.app/img/og-home.webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/webp" />
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="صدى العرب" />
     <meta name="twitter:description" content="مصدرك الموثوق للأخبار العاجلة والتحليلات المتعمقة باللغة العربية" />
     <meta name="twitter:site" content="@arabpress" />
-    <meta name="twitter:image" content="https://arabpress.netlify.app/logo.svg" />
+    <meta name="twitter:image" content="https://arabpress.netlify.app/img/og-home.webp" />
     
     <title>صدى العرب</title>
   </head>
-  <body>
-    <div id="root"></div>
+  <body style="margin:0;padding:0;background:#f0f0f0;font-family:Arial,sans-serif;display:block;visibility:visible !important;">
+    <!-- Message de test visible IMMÉDIATEMENT -->
+    <div style="position:fixed;top:0;left:0;right:0;bottom:0;background:#ffffff;z-index:9999;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;">
+      <div style="max-width:500px;">
+        <h1 style="color:#000000;font-size:24px;margin-bottom:20px;font-weight:bold;">جار التحميل...</h1>
+        <p style="color:#666666;font-size:16px;margin-bottom:20px;">Chargement de l'application en cours...</p>
+        <div style="width:50px;height:50px;border:5px solid #e0e0e0;border-top-color:#2563eb;border-radius:50%;margin:20px auto;animation:spin 1s linear infinite;"></div>
+      </div>
+    </div>
+    <noscript>
+      <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:sans-serif;direction:rtl;padding:20px;text-align:center;background:#fef2f2;color:#000000;">
+        <div>
+          <h1 style="color:#dc2626;margin-bottom:16px;">JavaScript est désactivé</h1>
+          <p style="color:#666;margin-bottom:8px;">Veuillez activer JavaScript pour utiliser ce site.</p>
+        </div>
+      </div>
+    </noscript>
+    <div id="root" style="min-height:100vh;background:#ffffff;visibility:visible !important;display:block !important;">
+      <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:Arial,sans-serif;direction:rtl;background:#f9fafb;padding:20px;box-sizing:border-box;color:#000000;">
+        <div style="text-align:center;background:#ffffff;padding:40px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.1);">
+          <div style="margin-bottom:16px;font-size:18px;color:#374151;font-weight:500;">جار التحميل...</div>
+          <div style="width:40px;height:40px;border:4px solid #e5e7eb;border-top-color:#2563eb;border-radius:50%;margin:0 auto;animation:spin 1s linear infinite;"></div>
+        </div>
+      </div>
+    </div>
+    <style>
+      @keyframes spin { to { transform: rotate(360deg); } }
+      * { box-sizing: border-box; }
+      html, body { margin: 0 !important; padding: 0 !important; width: 100% !important; height: 100% !important; visibility: visible !important; display: block !important; }
+      #root { min-height: 100vh !important; visibility: visible !important; display: block !important; }
+      body { background-color: #f0f0f0 !important; }
+    </style>
+    <script>
+      // Forcer l'affichage visible immédiatement
+      console.log('Script de diagnostic chargé');
+      document.body.style.backgroundColor = '#f9fafb';
+      
+      // Masquer le message de chargement une fois React chargé
+      function hideLoadingMessage() {
+        const loadingMsg = document.querySelector('body > div[style*="position:fixed"]');
+        if (loadingMsg) {
+          console.log('Masquage du message de chargement');
+          loadingMsg.style.display = 'none';
+        }
+      }
+      
+      // Masquer après chargement de React
+      window.addEventListener('DOMContentLoaded', function() {
+        setTimeout(hideLoadingMessage, 1000);
+      });
+      
+      // Diagnostic: vérifier les erreurs de chargement
+      window.addEventListener('error', function(e) {
+        console.error('ERREUR DÉTECTÉE:', e.error, e.message, e.filename, e.lineno);
+        const root = document.getElementById('root');
+        if (root) {
+          root.innerHTML = `
+            <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:Arial,sans-serif;direction:rtl;padding:20px;text-align:center;background:#fef2f2;color:#000;">
+              <div>
+                <h1 style="color:#dc2626;margin-bottom:16px;font-size:24px;">خطأ في التحميل</h1>
+                <p style="color:#666;margin-bottom:8px;font-size:16px;">${e.message || 'Erreur inconnue'}</p>
+                <p style="color:#999;font-size:12px;margin-bottom:16px;">Fichier: ${e.filename || 'N/A'} (Ligne: ${e.lineno || 'N/A'})</p>
+                <button onclick="window.location.reload()" style="padding:10px 20px;background:#2563eb;color:white;border:none;border-radius:6px;cursor:pointer;">إعادة المحاولة</button>
+              </div>
+            </div>
+          `;
+        }
+      }, true);
+      
+      // Vérifier si les assets se chargent
+      window.addEventListener('load', function() {
+        console.log('Page chargée, vérification des assets...');
+        setTimeout(function() {
+          const root = document.getElementById('root');
+          const stillLoading = root && root.innerHTML.includes('جار التحميل');
+          console.log('Vérification après 3s, stillLoading:', stillLoading);
+          if (stillLoading) {
+            console.warn('React ne s\'est pas chargé après 3 secondes');
+            root.innerHTML = `
+              <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:Arial,sans-serif;direction:rtl;padding:20px;text-align:center;background:#fef2f2;color:#000;">
+                <div>
+                  <h1 style="color:#dc2626;margin-bottom:16px;font-size:24px;">فشل التحميل</h1>
+                  <p style="color:#666;margin-bottom:8px;font-size:16px;">التطبيق لم يتم تحميله. تحقق من وحدة التحكم في المتصفح (F12).</p>
+                  <p style="color:#999;font-size:12px;margin-bottom:16px;">Les assets JavaScript ne se chargent peut-être pas correctement.</p>
+                  <button onclick="window.location.reload()" style="padding:10px 20px;background:#2563eb;color:white;border:none;border-radius:6px;cursor:pointer;">إعادة المحاولة</button>
+                </div>
+              </div>
+            `;
+          }
+        }, 3000);
+      });
+      
+      // Test immédiat
+      console.log('Root element:', document.getElementById('root'));
+      console.log('Script module existe:', document.querySelector('script[type="module"]'));
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

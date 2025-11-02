@@ -9,25 +9,88 @@ interface RelatedArticlesProps {
 }
 
 export default function RelatedArticles({ currentArticle, allArticles, limit = 3 }: RelatedArticlesProps) {
-  // Filtrer les articles par catégorie et exclure l'article actuel
-  const relatedArticles = allArticles
-    .filter(article => 
-      article.id !== currentArticle.id && 
-      article.category === currentArticle.category
-    )
-    .slice(0, limit);
+  // Fonction pour calculer un score de similarité entre deux articles
+  const calculateSimilarityScore = (article1: NewsItem, article2: NewsItem): number => {
+    let score = 0;
 
-  // Si pas assez d'articles dans la même catégorie, ajouter d'autres articles
-  if (relatedArticles.length < limit) {
+    // Bonus important pour la même catégorie
+    if (article1.category === article2.category) {
+      score += 10;
+    }
+
+    // Score basé sur les mots-clés communs
+    const keywords1 = (article1.keywords || '').split('،').map(k => k.trim().toLowerCase());
+    const keywords2 = (article2.keywords || '').split('،').map(k => k.trim().toLowerCase());
+    
+    // Compter les mots-clés communs
+    const commonKeywords = keywords1.filter(k => keywords2.some(k2 => k2.includes(k) || k.includes(k2)));
+    score += commonKeywords.length * 5;
+
+    // Score basé sur les mots communs dans le titre
+    const title1Words = article1.title.toLowerCase().split(/\s+/);
+    const title2Words = article2.title.toLowerCase().split(/\s+/);
+    const commonTitleWords = title1Words.filter(w => w.length > 3 && title2Words.includes(w));
+    score += commonTitleWords.length * 3;
+
+    // Score basé sur les mots communs dans le résumé
+    const summary1Words = (article1.summary || '').toLowerCase().split(/\s+/);
+    const summary2Words = (article2.summary || '').toLowerCase().split(/\s+/);
+    const commonSummaryWords = summary1Words.filter(w => w.length > 4 && summary2Words.includes(w));
+    score += commonSummaryWords.length * 1;
+
+    // Bonus pour les articles récents (moins de 30 jours)
+    const articleDate = new Date(article2.date);
+    const daysDiff = (Date.now() - articleDate.getTime()) / (1000 * 60 * 60 * 24);
+    if (daysDiff < 30) {
+      score += 2;
+    }
+
+    return score;
+  };
+
+  // Calculer les scores de similarité pour tous les articles
+  const articlesWithScores = allArticles
+    .filter(article => article.id !== currentArticle.id)
+    .map(article => ({
+      article,
+      score: calculateSimilarityScore(currentArticle, article)
+    }))
+    .filter(item => item.score > 0) // Exclure les articles sans similarité
+    .sort((a, b) => b.score - a.score) // Trier par score décroissant
+    .slice(0, limit)
+    .map(item => item.article);
+
+  // Si pas assez d'articles avec similarité, ajouter des articles de la même catégorie
+  if (articlesWithScores.length < limit) {
+    const sameCategoryArticles = allArticles
+      .filter(article => 
+        article.id !== currentArticle.id && 
+        article.category === currentArticle.category &&
+        !articlesWithScores.some(a => a.id === article.id)
+      )
+      .slice(0, limit - articlesWithScores.length);
+    
+    articlesWithScores.push(...sameCategoryArticles);
+  }
+
+  // Si encore pas assez, ajouter n'importe quels articles récents
+  if (articlesWithScores.length < limit) {
     const additionalArticles = allArticles
       .filter(article => 
         article.id !== currentArticle.id && 
-        !relatedArticles.some(rel => rel.id === article.id)
+        !articlesWithScores.some(a => a.id === article.id)
       )
-      .slice(0, limit - relatedArticles.length);
+      .sort((a, b) => {
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        return dateB.getTime() - dateA.getTime();
+      })
+      .slice(0, limit - articlesWithScores.length);
     
-    relatedArticles.push(...additionalArticles);
+    articlesWithScores.push(...additionalArticles);
   }
+
+  const relatedArticles = articlesWithScores;
 
   if (relatedArticles.length === 0) {
     return null;
@@ -87,6 +150,7 @@ export default function RelatedArticles({ currentArticle, allArticles, limit = 3
                   width="400"
                   height="300"
                   loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>

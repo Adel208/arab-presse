@@ -32,3 +32,6 @@ automation/logs/
 
 # Unused article images from Pexels
 public/img/article-*.jpg
+
+# Local Netlify folder
+.netlify

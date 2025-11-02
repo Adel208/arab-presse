@@ -82,9 +82,9 @@ export default function About() {
                 نحن نرحب بتواصلك معنا في أي وقت. هل لديك اقتراحات أو استفسارات أو ترغب في الانضمام إلى فريقنا؟
               </p>
               <ul className="list-disc list-inside space-y-1 text-blue-900">
-                <li><strong>البريد الإلكتروني العام:</strong> contact@echode-larabe.com</li>
-                <li><strong>البريد الإلكتروني للصحافة:</strong> press@echode-larabe.com</li>
-                <li><strong>البريد الإلكتروني للتعاون:</strong> partnerships@echode-larabe.com</li>
+                <li><strong>البريد الإلكتروني العام:</strong> sadaarabe@gmail.com</li>
+                <li><strong>البريد الإلكتروني للصحافة:</strong> sadaarabe@gmail.com</li>
+                <li><strong>البريد الإلكتروني للتعاون:</strong> sadaarabe@gmail.com</li>
               </ul>
               <p className="mt-4 text-blue-900">
                 يمكنك أيضاً زيارة صفحة <Link to="/contact" className="underline font-semibold">اتصل بنا</Link> لإرسال رسالة مباشرة.
