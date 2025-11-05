@@ -9,9 +9,9 @@
 /assets/*     /assets/:splat  200!
 /img/*        /img/:splat     200!
 
-# Articles - TOUS vers index.html (React Router gère le routage)
-# Netlify préserve automatiquement les paramètres de requête avec 200
-/article/*    /index.html  200
+# Articles - Servir les fichiers HTML statiques s'ils existent, sinon vers index.html
+# Cette règle permet à Facebook de crawler les métadonnées Open Graph
+/article/*    /article/:splat/index.html  200!
 
 # Toutes les autres routes vers l'app React (DOIT être en dernier)
 # Netlify préserve automatiquement les paramètres de requête avec 200
