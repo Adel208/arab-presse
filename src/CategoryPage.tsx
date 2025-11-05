@@ -167,6 +167,7 @@ export default function CategoryPage(): JSX.Element {
       10: '/img/eu-sudan-flags.webp',
       12: '/img/darfoure.webp',
       13: '/img/tunispolic.webp',
+      17: '/img/zohran mamdani.webp',
     };
     return imageMap[article.id] || '/img/gabesmanif.webp';
   };

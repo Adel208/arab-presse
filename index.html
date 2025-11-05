@@ -134,9 +134,36 @@
       
       // Diagnostic: vérifier les erreurs de chargement
       window.addEventListener('error', function(e) {
-        console.error('ERREUR DÉTECTÉE:', e.error, e.message, e.filename, e.lineno);
+        // Ignorer les erreurs silencieuses (toutes les propriétés undefined)
+        // Ce sont généralement des erreurs de chargement de ressources non-bloquantes
+        if (!e.error && !e.message && !e.filename && !e.lineno) {
+          return; // Ignorer complètement ces erreurs
+        }
+        
+        // Ignorer les erreurs de ressources manquantes (404, favicon, etc.)
+        if (e.message && (e.message.includes('404') || e.message.includes('Failed to load'))) {
+          return;
+        }
+        
+        if (e.filename && (e.filename.includes('favicon') || e.filename.includes('apple-touch-icon'))) {
+          return;
+        }
+        
+        // Logger seulement les vraies erreurs JavaScript
+        if (e.error || e.message) {
+          console.error('ERREUR DÉTECTÉE:', {
+            error: e.error,
+            message: e.message,
+            filename: e.filename,
+            lineno: e.lineno,
+            colno: e.colno,
+            stack: e.error?.stack
+          });
+        }
+        
+        // Ne pas afficher l'erreur si React a déjà chargé
         const root = document.getElementById('root');
-        if (root) {
+        if (root && !root.innerHTML.includes('خطأ') && (e.error || e.message)) {
           root.innerHTML = `
             <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:Arial,sans-serif;direction:rtl;padding:20px;text-align:center;background:#fef2f2;color:#000;">
               <div>
