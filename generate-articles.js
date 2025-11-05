@@ -142,7 +142,7 @@ articles.forEach(article => {
     <meta name="twitter:url" content="${articleUrl}" />
     <meta name="twitter:title" content="${(article.title || '').replace(/"/g, '&quot;')}" />
     <meta name="twitter:description" content="${(article.description || '').replace(/"/g, '&quot;')}" />
-    ${imageUrl ? `<meta name="twitter:image" content="${imageUrl}" />` : ''}
+    ${imageUrl ? `<meta name="twitter:image" content="${imageUrl.replace(/ /g, '%20')}" />` : ''}
     
     <title>${(article.title || '').replace(/"/g, '&quot;')} - صدى العرب</title>
     <script type="module" crossorigin src="${jsFile}"></script>
