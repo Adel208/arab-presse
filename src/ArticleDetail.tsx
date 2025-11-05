@@ -187,6 +187,8 @@ export default function ArticleDetail() {
         <meta property="og:image:height" content="800" />
         <meta property="og:image:type" content="image/webp" />
         <meta property="og:site_name" content="صدى العرب" />
+        <meta property="og:locale" content="ar_AR" />
+        <meta property="fb:app_id" content="61583290285231" />
         <meta property="article:published_time" content={article.date} />
         <meta property="article:modified_time" content={article.date} />
         <meta property="article:author" content={article.author || "هيئة التحرير"} />
