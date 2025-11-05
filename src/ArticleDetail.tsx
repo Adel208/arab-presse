@@ -24,11 +24,13 @@ export default function ArticleDetail() {
   
   // Construire l'URL absolue pour l'image
   const imageUrl = article?.image 
-    ? `${window.location.origin}${article.image}`
+    ? `${window.location.origin}${article.image.replace(/ /g, '%20')}`
     : article?.id === 7 
     ? `${window.location.origin}/img/gabesmanif.webp`
     : article?.id === 8
     ? `${window.location.origin}/img/marocmanif.webp`
+    : article?.id === 17
+    ? `${window.location.origin}/img/zohran%20mamdani.webp`
     : `${window.location.origin}/logo.svg`;
   
   const articleUrl = window.location.href;
@@ -180,8 +182,10 @@ export default function ArticleDetail() {
         <meta property="og:title" content={article.title} />
         <meta property="og:description" content={article.metaDescription || article.summary} />
         <meta property="og:image" content={imageUrl} />
+        <meta property="og:image:secure_url" content={imageUrl} />
         <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
+        <meta property="og:image:height" content="800" />
+        <meta property="og:image:type" content="image/webp" />
         <meta property="og:site_name" content="صدى العرب" />
         <meta property="article:published_time" content={article.date} />
         <meta property="article:modified_time" content={article.date} />
